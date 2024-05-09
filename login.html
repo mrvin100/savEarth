@@ -29,14 +29,14 @@
         <form action="" method="post" enctype="multipart/form-data" class="form-container login">
             <h1 class="heading">Sign in</h1>
             <div class="input_box">
-                <input id="email" type="email" placeholder="Enter email" name="email" maxlength="50" required class="box">
+                <input id="email" type="email" placeholder="Enter email" name="email" maxlength="50"  class="box">
             </div>
             <div class="input_box">
-                <input id="pass" type="password" placeholder="Password" name="pass" maxlength="20" required class="box pass">
+                <input id="pass" type="password" placeholder="Password" name="password" maxlength="20"  class="box pass">
                 <i class="fas fa-eye-slash eye"></i>
             </div>
-            <p class='remember'><label for="remember-me"><input type="checkbox" id="remember-me"> remember me </label><a href="#" class="link">forgot password?</a></p>
-            <input type="submit" value="login" name="login" class="btn">
+            <p class='remember'><label for="remember-me"><input type="checkbox" id="remember-me" disabled> remember me </label><a href="#" class="link">forgot password?</a></p>
+            <button type="submit" name="login" class="btn">login</button>
         </form>
     </section>
 </body>
