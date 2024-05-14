@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 
 const schema = mongoose.Schema({
-  head: {
+  header: {
     type: String,
     default: "Unknown",
   },
