@@ -1,9 +1,20 @@
 const blogRouter = require("express").Router();
 const Blog = require("../models/blog");
 const multer = require("multer");
-const path = require("path");
 
-const { PORT } = process.env;
+const { PORT, HOST } = process.env;
+
+function blogRefactoring(savedBlog) {
+  const link = savedBlog.image.split(" ").join("%20");
+  // console.log(link);
+  return {
+    header: savedBlog.header,
+    date: savedBlog.date,
+    description: savedBlog.description,
+    tags: savedBlog.tags,
+    image: `${HOST}${PORT}/${link}`,
+  };
+}
 
 const storage = multer.diskStorage({
   destination: (req, file, fn) => {
@@ -31,8 +42,8 @@ const upload = multer({
 });
 
 blogRouter.post("/", upload.single("file"), async (req, res) => {
-  console.log(req.file, "trying to show image file");
   if (!req.file) return res.json({ error: "invalid file extension" });
+
   const days = {
     1: "Monday",
     2: "Tuesday",
@@ -62,16 +73,8 @@ blogRouter.post("/", upload.single("file"), async (req, res) => {
 
   try {
     let savedBlog = await blog.save();
-    const link = savedBlog.image.split(" ").join("%20");
-    console.log(link);
-    savedBlog = {
-      header: savedBlog.header,
-      date: savedBlog.date,
-      description: savedBlog.description,
-      tags: savedBlog.tags,
-      image: `http://localhost:${PORT}/${link}`,
-    };
-    res.send(savedBlog).status(200);
+    const refactoredBlog = blogRefactoring(savedBlog);
+    res.send(refactoredBlog).status(200);
   } catch (error) {
     res.status(400).json({ error: error.message });
   }
@@ -81,7 +84,12 @@ blogRouter.get("/", async (req, res) => {
   console.log("in get blog router");
   try {
     const allBlogs = await Blog.find();
-    res.send(allBlogs);
+    let refactoredBlogs = [];
+    allBlogs.map((b) => {
+      refactoredBlogs = refactoredBlogs.concat(blogRefactoring(b));
+    });
+
+    res.send(refactoredBlogs);
   } catch (error) {
     res.status(404).json({ error: error.message });
   }
