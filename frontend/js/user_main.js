@@ -78,8 +78,8 @@ if (registerForm) {
         ? (registerDatas[name] = input.value)
         : null
     })
-    console.log(registerDatas)
+
     getData('user', registerDatas)
   })
-  console.log(registerInputs)
+  // console.log(registerInputs)
 }
