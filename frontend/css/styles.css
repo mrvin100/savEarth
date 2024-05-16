@@ -410,16 +410,13 @@ h3.heading {
   background-color: var(--white0);
   border: var(--s2-border-black);
 
-  /* login && register && createArticle section starts */
+  /* login && register section starts */
 
   &.login {
     max-width: 30rem;
   }
 
   &.register {
-    max-width: 30rem;
-  }
-  &.createArticle {
     max-width: 30rem;
   }
   .heading {
@@ -454,6 +451,7 @@ h3.heading {
       border-radius: var(--s2-raduis);
       border: 1px solid transparent;
       color: var(--green3);
+      resize: none;
       &::placeholder {
         color: #80c18c;
       }
