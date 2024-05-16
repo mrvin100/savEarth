@@ -38,7 +38,8 @@
   --s2-border-light: 1px solid var(--white-alt1);
 
   /* shadows */
-  --shadow-1: 0px 8px 16px -8px #0f0f0f1f;
+  --shadow0: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+  --shadow1: 0px 8px 16px -8px #0f0f0f1f;
 
   /* body font */
 
@@ -302,6 +303,15 @@ h3.heading {
 /* header section starts */
 
 .header {
+  &.active{
+    position: sticky;
+    top: 0;
+    left: 0;
+    right: 0;
+    box-shadow: var(--shadow0);
+  }
+
+  background-color: var(--white1);
   .offers {
     background-color: var(--black0);
     color: var(--white0);
@@ -339,6 +349,45 @@ h3.heading {
         margin: 0.3rem 0.5rem;
         &:hover {
           color: var(--black4);
+        }
+      }
+    }
+    .navbar {
+      display: none;
+      .icons{
+        position: absolute;
+        top: .5rem;
+        left: 0.5rem;
+        right: 0.5rem;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 1rem;
+        .icon{
+          font-size: var(--m3-size);
+          padding: 1rem;
+          background: var(--white1);
+          border-radius: var(--s1-raduis);
+          padding: 0.3rem;
+        }
+      }
+    }
+    .navbar.active {
+      position: fixed;
+      top: 1rem;
+      left: 1rem;
+      right: 1rem;
+      background: var(--black-alt1);
+      bottom: 1rem;
+      display: grid;
+      place-content: center;
+      z-index: var(--l1-z-index);
+      backdrop-filter: blur(60px);
+      a {
+        font-size: var(--m2-size);
+        color: var(--black0);
+        &:hover {
+          color: var(--white0);
         }
       }
     }
@@ -385,28 +434,6 @@ h3.heading {
     }
     .main-header {
       position: relative;
-      .navbar {
-        display: none;
-      }
-      .navbar.active {
-        position: fixed;
-        top: 1rem;
-        left: 1rem;
-        right: 1rem;
-        background: var(--black-alt1);
-        bottom: 1rem;
-        display: grid;
-        place-content: center;
-        z-index: var(--l1-z-index);
-        backdrop-filter: blur(60px);
-        a {
-          font-size: var(--m2-size);
-          color: var(--black0);
-          &:hover {
-            color: var(--white0);
-          }
-        }
-      }
       #search-icon{
         display: block;
       }

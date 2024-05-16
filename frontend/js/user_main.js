@@ -1,3 +1,107 @@
+/* ============== custom main editor js file made by @mrvin100 feat @stackvirus on github ============= */
+
+
+
+/* listen event on element and do action */
+
+// 1. when search-icon is clicked searchbar is show or hide
+const searchBar = document.querySelector('.header .search_form')
+const searchIcon = document.querySelector('#search-icon')
+
+if(searchIcon){
+  searchIcon.addEventListener('click', () => {
+    hasThisClasName(searchBar, 'active') ? hideSearchBar() : showSearchBar()
+  })
+}
+
+
+// 2. when menu-icon is clicked navbar is show
+const navBar = document.querySelector('.header .navbar')
+const menuIcon = document.querySelector('#menu-icon')
+
+if(menuIcon){
+  menuIcon.addEventListener('click', () => {
+    showNavBar()
+  })
+}
+
+// 3. when close-icon is clicked navbar is hide
+const closeIcon = document.querySelector('#close-icon')
+
+if(closeIcon){
+  closeIcon.addEventListener('click', () => {
+    hideNavBar()
+  })
+}
+
+// 4. when window is scrolled some action is done
+
+  window.addEventListener('scroll', () => {
+    hideSearchBar()  // hide search bar
+    activeHearder() // active header
+  }, scrollY > 0)
+
+
+/* customs js functions to reuse */
+
+// Show or hide searchbar functions
+
+const showNavBar = () => {
+  navBar.classList.add('active')
+}
+const hideNavBar = () => {
+  navBar.classList.remove('active')
+}
+
+// Show or hide searchbar functions
+
+const showSearchBar = () => {
+  searchBar.classList.add('active')
+}
+const hideSearchBar = () => {
+  searchBar.classList.remove('active')
+}
+
+// active header
+const header = document.querySelector('.header')
+
+const activeHearder = () => {
+  header.classList.toggle('active', scrollY > 0)
+}
+
+/* builded functions to reuse it */
+
+// function to check if a tag have a className
+
+const hasThisClasName = (tag, classname) => {
+  let result = false
+  if(tag.classList.contains(classname)){
+    result = true
+  }
+  return result
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// function to show or hide password on login or register form
+
 const showHiddenPassword = (passField, passEye) => {
   const input = document.querySelector(passField),
     iconEye = document.querySelector(passEye)
@@ -25,6 +129,16 @@ const showHiddenPassword = (passField, passEye) => {
 
 showHiddenPassword('.pass', '.eye')
 showHiddenPassword('.cpass', '.eye')
+
+
+
+
+
+
+
+
+
+/* ===================== backend part starts : build by @stackvirus on github ========================== */
 
 // const changeClassList
 //fetch function
