@@ -5,7 +5,10 @@ import Blog from "./Blog";
 import Login from "./Login";
 import Register from "./Register";
 import AddPost from "./editor/AddPost";
+import Dashboard from "./editor/Dashboard";
+import UpdatePost from "./editor/UpdatePost";
 import { Route, Routes, BrowserRouter } from "react-router-dom";
+import Posts from "./editor/Posts";
 
 function App() {
   return (
@@ -18,6 +21,9 @@ function App() {
           <Route path="/login" element={<Login />}></Route>
           <Route path="/register" element={<Register />}></Route>
           <Route path="/add-post" element={<AddPost />}></Route>
+          <Route path="/update-post" element={<UpdatePost />}></Route>
+          <Route path="/dashboard" element={<Dashboard />}></Route>
+          <Route path="/posts" element={<Posts />}></Route>
         </Routes>
       </BrowserRouter>
     </>

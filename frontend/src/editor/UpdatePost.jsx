@@ -1,8 +1,8 @@
-export default function AddPost() {
+export default function UpdatePost() {
   return (
     <section className="login-register-section container">
       <form className="form-container login">
-        <h1 className="heading">Add your Article</h1>
+        <h1 className="heading">update your Article</h1>
         <div className="input_box">
           <input
             id="email"
@@ -36,7 +36,12 @@ export default function AddPost() {
         <div className="input_box">
           <input type="file" name="file" className="articleImage box" />
         </div>
-        <input type="submit" value="create" name="add-post" className="btn" />
+        <input
+          type="submit"
+          value="update"
+          name="update-post"
+          className="btn"
+        />
       </form>
     </section>
   );

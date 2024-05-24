@@ -1,9 +1,6 @@
-import { useEffect, useState } from "react";
+import Post from "./../components/Post";
 
-import Post from "./components/Post";
-
-export default function Blog() {
-  const blogDatas = [];
+export default function Posts() {
   const posts = [
     {
       src: "./src/img/post1.png",
@@ -86,42 +83,13 @@ export default function Blog() {
       tags: ["software development", "Tools", "Saas"],
     },
   ];
-  // const [posts, setPosts] = useState([blogDatas]);
-  // const getPosts = useEffect(() => {
-  //   fetch("http://localhost:3000/api/blogs")
-  //     .then((datas) => datas.json())
-  //     .then((res) => setPosts((posts) => posts.push(res)));
-  // }, []);
   return (
-    <section className="blog container">
-      <h1 className="heading">Recent blog posts</h1>
+    <section className="blog posts container">
+      <h1 className="heading">My Posts</h1>
       <div className="box_container">
         {[...posts].slice(posts.length - 3).map((post) => {
           return <Post key={posts.indexOf(post)} post={post} />;
         })}
-      </div>
-      <h1 className="heading">All blog posts</h1>
-      <div className="box_container">
-        {posts.map((post) => {
-          return <Post key={posts.indexOf(post)} post={post} />;
-        })}
-      </div>
-      <div className="navigations">
-        <span className="prev">
-          <i className="bx bx-left-arrow-alt"></i> Preview
-        </span>
-        <div className="items">
-          <span>1</span>
-          <span>2</span>
-          <span>3</span>
-          <span>..</span>
-          <span>4</span>
-          <span>5</span>
-          <span>6</span>
-        </div>
-        <span className="next">
-          Next <i className="bx bx-right-arrow-alt"></i>
-        </span>
       </div>
     </section>
   );

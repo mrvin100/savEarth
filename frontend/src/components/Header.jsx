@@ -1,4 +1,3 @@
-/* eslint-disable react/prop-types */
 import { useState } from "react";
 import { Link } from "react-router-dom";
 
@@ -9,6 +8,7 @@ const items = [
   { key: "contact", label: "contact" },
   { key: "login", label: "login" },
   { key: "register", label: "register" },
+  { key: "dashboard", label: "dashboard" },
 ];
 
 // Navbar component starts
@@ -80,7 +80,11 @@ export default function Header() {
           ></div>
         </div>
       </div>
-      <Link to="/add-post" className="bx bx-notepad icon add_post"></Link>
+      <Link
+        to="/add-post"
+        className="bx bx-notepad icon add_post"
+        title="add post"
+      ></Link>
     </header>
   );
 }

@@ -1,9 +1,25 @@
 /* eslint-disable react/prop-types */
 
+import { Link } from "react-router-dom";
+
 export default function Post({ post }) {
   const { src, date, title, description, tags } = post;
   return (
     <div className="box">
+      <div className="tools">
+        <Link
+          to="/update-post"
+          className="bx bx-edit icon"
+          title="update post"
+        ></Link>
+        <div
+          className="bx bx-trash icon"
+          title="delete post"
+          onClick={() => {
+            return confirm("confirm delete this post?");
+          }}
+        ></div>
+      </div>
       <div className="image">
         <img src={src} alt="post image" />
       </div>

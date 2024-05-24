@@ -462,7 +462,7 @@ h3.heading {
   .add_post {
     position: fixed;
     right: 1.5rem;
-    bottom: 3rem;
+    bottom: 2rem;
     background-color: var(--white1);
     padding: 0.2rem 0.3rem;
     border-radius: var(--s1-raduis);
@@ -595,6 +595,9 @@ h3.heading {
     margin-bottom: 2rem;
     text-align: center;
   }
+  .tools {
+    display: none;
+  }
 
   .box_container {
     display: grid;
@@ -694,6 +697,74 @@ h3.heading {
           background-color: #ecfdf3;
           color: var(--main-clr);
         }
+      }
+    }
+  }
+}
+
+/* posts section starts */
+
+.posts {
+  .box {
+    position: relative;
+    .tools {
+      position: absolute;
+      top: 0.5rem;
+      left: 0.5rem;
+      display: inline-block;
+      padding: 0.5rem;
+      border-radius: var(--s1-raduis);
+      background-color: rgba(0, 0, 0, 0.16);
+      text-align: center;
+      .icon {
+        background-color: var(--white1);
+        margin-right: 0.5rem;
+        padding: 0.2em 0.3rem;
+        border-radius: var(--s1-raduis);
+        font-size: var(--m2-size);
+        &:last-child {
+          margin-right: 0;
+        }
+      }
+    }
+  }
+}
+
+/* dashboard section starts */
+
+.dashboard {
+  h1.heading {
+    text-align: center;
+    margin: 1rem;
+  }
+  .box_container {
+    background: var(--white2);
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(15rem, 20rem));
+    justify-content: center;
+    gap: 1rem;
+    padding: 1rem;
+    .box {
+      background: var(--white1);
+      padding: 1rem;
+      border-radius: var(--s2-raduis);
+      .heading {
+        color: var(--green3);
+        text-align: center;
+        background: var(--white2);
+        border-radius: var(--s1-raduis);
+        padding: 0.5rem;
+      }
+      .subtitle {
+        color: var(--black4);
+        display: block;
+        text-align: center;
+        padding: 0.5rem;
+      }
+      .btn {
+        display: block;
+        text-align: center;
+        font-size: var(--m1-size);
       }
     }
   }
