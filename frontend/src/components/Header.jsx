@@ -80,6 +80,7 @@ export default function Header() {
           ></div>
         </div>
       </div>
+      <Link to="/add-post" className="bx bx-notepad icon add_post"></Link>
     </header>
   );
 }
