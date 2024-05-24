@@ -3,8 +3,8 @@ import { useEffect, useState } from "react";
 import Post from "./components/Post";
 
 export default function Blog() {
-  const blogDatas = [];
-  const posts = [
+  // const blogDatas = [];
+  const initPosts = [
     {
       src: "./src/img/post1.png",
       date: "sunday, 1 jan 2023",
@@ -86,12 +86,15 @@ export default function Blog() {
       tags: ["software development", "Tools", "Saas"],
     },
   ];
-  // const [posts, setPosts] = useState([blogDatas]);
-  // const getPosts = useEffect(() => {
-  //   fetch("http://localhost:3000/api/blogs")
-  //     .then((datas) => datas.json())
-  //     .then((res) => setPosts((posts) => posts.push(res)));
-  // }, []);
+  const [posts, setPosts] = useState(initPosts);
+  useEffect(() => {
+    fetch("http://localhost:3000/api/blogs")
+      .then((datas) => datas.json())
+      .then((res) => {
+        console.log(res);
+        setPosts(posts.concat(...res));
+      });
+  }, []);
   return (
     <section className="blog container">
       <h1 className="heading">Recent blog posts</h1>

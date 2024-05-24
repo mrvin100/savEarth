@@ -1,5 +1,3 @@
-/* eslint-disable react/no-unknown-property */
-
 import loginImg from "./img/user-with-bag.png";
 
 export default function Login() {

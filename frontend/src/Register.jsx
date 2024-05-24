@@ -1,8 +1,33 @@
-/* eslint-disable react/no-unknown-property */
+import { useNavigate } from "react-router-dom";
 
+import { useState } from "react";
 import registerImg from "./img/user-with-bag.png";
 
 export default function Register() {
+  const [userInfos, setUserInfos] = useState({
+    email: "",
+    password: "",
+  });
+
+  const register = (e) => {
+    e.preventDefault();
+    console.log(userInfos);
+    fetch(`http://localhost:3000/api/user`, {
+      method: "POST",
+      headers: {
+        Accept: "application/json, text/plain, */*",
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(userInfos),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        window.localStorage.setItem("userInfos", JSON.stringify(data));
+        console.log(window.localStorage.getItem("userInfos"));
+      })
+      .catch((error) => console.error(error));
+  };
+
   return (
     <section class="login-register-section container">
       <div class="content">
@@ -23,9 +48,10 @@ export default function Register() {
         <img src={registerImg} alt="user with bag" />
       </div>
       <form
-        action=""
-        method="post"
-        enctype="multipart/form-data"
+        // action=""
+        // method="post"
+        // enctype="multipart/form-data"
+        onSubmit={register}
         className="form-container register"
       >
         <h1 className="heading">Sign up</h1>
@@ -37,6 +63,10 @@ export default function Register() {
             name="email"
             maxlength="50"
             className="box"
+            value={userInfos.email}
+            onChange={({ target }) =>
+              setUserInfos({ ...userInfos, email: target.value })
+            }
           />
         </div>
         <div className="input_box">
@@ -68,6 +98,10 @@ export default function Register() {
             name="password"
             maxlength="20"
             className="box pass"
+            value={userInfos.password}
+            onChange={({ target }) =>
+              setUserInfos({ ...userInfos, password: target.value })
+            }
           />
           <i className="fas fa-eye-slash eye"></i>
         </div>

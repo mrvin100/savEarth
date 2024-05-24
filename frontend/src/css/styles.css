@@ -343,6 +343,7 @@ h3.heading {
     align-items: center;
     gap: 1rem;
     .navbar {
+      display: none;
       a {
         display: inline-block;
         text-transform: capitalize;
@@ -351,9 +352,6 @@ h3.heading {
           color: var(--black4);
         }
       }
-    }
-    .navbar {
-      display: none;
       .icons {
         position: absolute;
         top: 0.5rem;
@@ -373,13 +371,14 @@ h3.heading {
       }
     }
     .navbar.show {
-      /* .navbar { */
       position: fixed;
-      top: 1rem;
-      left: 1rem;
-      right: 1rem;
+      left: 0;
+      top: 6vh;
+      bottom: 0;
+      max-width: 25rem;
+      width: 100%;
+      /* border-right: var(--s1-border-black); */
       background: var(--black-alt1);
-      bottom: 1rem;
       display: grid;
       place-content: center;
       z-index: var(--l1-z-index);
@@ -435,6 +434,9 @@ h3.heading {
     }
     .main-header {
       position: relative;
+      .navbar.show {
+        max-width: 100%;
+      }
       #search-icon {
         display: block;
       }
