@@ -2,7 +2,7 @@
 
 /* import section starts */
 
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap");
 
 /* initialization of root variables */
 
@@ -43,7 +43,7 @@
 
   /* body font */
 
-  --body-font: 'Poppins', Arial, sans-serif;
+  --body-font: "Poppins", Arial, sans-serif;
 
   /* sizes */
 
@@ -303,7 +303,7 @@ h3.heading {
 /* header section starts */
 
 .header {
-  &.active{
+  &.active {
     position: sticky;
     top: 0;
     left: 0;
@@ -354,16 +354,16 @@ h3.heading {
     }
     .navbar {
       display: none;
-      .icons{
+      .icons {
         position: absolute;
-        top: .5rem;
+        top: 0.5rem;
         left: 0.5rem;
         right: 0.5rem;
         display: flex;
         justify-content: space-between;
         align-items: center;
         gap: 1rem;
-        .icon{
+        .icon {
           font-size: var(--m3-size);
           padding: 1rem;
           background: var(--white1);
@@ -372,7 +372,8 @@ h3.heading {
         }
       }
     }
-    .navbar.active {
+    .navbar.show {
+      /* .navbar { */
       position: fixed;
       top: 1rem;
       left: 1rem;
@@ -397,17 +398,17 @@ h3.heading {
       align-items: center;
       gap: 1rem;
     }
-    #search-icon{
+    #search-icon {
       display: none;
     }
-    .search_form{
+    .search_form {
       display: flex;
       justify-content: center;
       align-items: center;
-      gap: .5rem 1rem;
-      .box{
+      gap: 0.5rem 1rem;
+      .box {
         width: 100%;
-        padding: .6rem 1rem;
+        padding: 0.6rem 1rem;
         display: block;
         font-size: var(--m1-size);
         background: #e6f3e8;
@@ -418,7 +419,7 @@ h3.heading {
         &::placeholder {
           color: #80c18c;
         }
-  
+
         &:focus {
           border: var(--s2-border-black);
           transition: border var(--s1-transition);
@@ -434,16 +435,16 @@ h3.heading {
     }
     .main-header {
       position: relative;
-      #search-icon{
+      #search-icon {
         display: block;
       }
-      .search_form{
+      .search_form {
         display: none;
         position: absolute;
         top: 100%;
         left: 1rem;
         right: 1rem;
-        .icon{
+        .icon {
           position: absolute;
           right: 0.5rem;
           top: 50%;
@@ -453,7 +454,7 @@ h3.heading {
           border-radius: var(--s2-raduis);
         }
       }
-      .search_form.active{
+      .search_form.active {
         display: flex;
       }
     }
@@ -463,7 +464,7 @@ h3.heading {
 /* form container section starts */
 
 .login-register-section {
-  height: 100vh;
+  min-height: 70vh;
   display: flex;
   justify-content: space-around;
   align-items: center;
@@ -620,6 +621,7 @@ h3.heading {
         .tags {
           .tag {
             display: inline-block;
+            margin-right: 0.5rem;
             padding: 0.3rem 0.7rem;
             border-radius: var(--m1-raduis);
             cursor: pointer;
@@ -671,6 +673,7 @@ h3.heading {
         cursor: pointer;
         display: inline-block;
         padding: 0.2rem 0.3rem;
+        margin-right: 0.3rem;
         width: 2rem;
         text-align: center;
         border-radius: var(--s2-raduis);
