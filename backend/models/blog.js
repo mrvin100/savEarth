@@ -1,11 +1,11 @@
 const mongoose = require("mongoose");
 
 const schema = mongoose.Schema({
-  header: {
+  title: {
     type: String,
     default: "Unknown",
   },
-  image: {
+  src: {
     type: String,
     default: "img/visual_1.png",
   },
@@ -19,6 +19,10 @@ const schema = mongoose.Schema({
       type: String,
     },
   ],
+  user: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "User",
+  },
 });
 
 schema.set("toJSON", {

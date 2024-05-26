@@ -1,24 +1,27 @@
 const blogRouter = require("express").Router();
 const Blog = require("../models/blog");
+const User = require("../models/user");
 const multer = require("multer");
+const { userExtractor } = require("../utils/middlewares");
 
 const { PORT, HOST } = process.env;
 
 function blogRefactoring(savedBlog) {
-  const link = savedBlog.image.split(" ").join("%20");
+  const link = savedBlog.src.split(" ").join("%20");
   // console.log(link);
   return {
-    header: savedBlog.header,
+    title: savedBlog.title,
     date: savedBlog.date,
     description: savedBlog.description,
     tags: savedBlog.tags,
-    image: `${HOST}${PORT}/${link}`,
+    src: `${HOST}${PORT}/${link}`,
+    user: savedBlog.user,
   };
 }
 
 const storage = multer.diskStorage({
   destination: (req, file, fn) => {
-    fn(null, "./images/");
+    fn(null, "./images/blogs");
   },
   filename: (req, file, fn) => {
     fn(null, Date.now() + file.originalname);
@@ -29,7 +32,7 @@ const fileFilter = (req, file, fn) => {
   if (file.mimetype === "image/jpeg" || file.mimetype === "image/png") {
     fn(null, true);
   } else {
-    fn(null, false);
+    fn((error) => error.message, false);
   }
 };
 
@@ -41,49 +44,63 @@ const upload = multer({
   fileFilter: fileFilter,
 });
 
-blogRouter.post("/", upload.single("file"), async (req, res) => {
-  if (!req.file) return res.json({ error: "invalid file extension" });
+blogRouter.post(
+  "/",
+  userExtractor,
+  upload.single("file"),
+  async (req, res, next) => {
+    if (!req.file) return res.json({ error: "invalid file extension" });
+    const user = req.user;
+    const days = {
+      1: "Monday",
+      2: "Tuesday",
+      3: "Wednesday",
+      4: "Thursday",
+      5: "Friday",
+      6: "Saturday",
+      7: "Suncday",
+    };
 
-  const days = {
-    1: "Monday",
-    2: "Tuesday",
-    3: "Wednesday",
-    4: "Thursday",
-    5: "Friday",
-    6: "Saturday",
-    7: "Suncday",
-  };
+    const { body } = req;
+    console.log(body);
+    if (!body.description) return res.json({ error: "an input missing!" });
 
-  const { body } = req;
-  console.log(body);
-  if (!body.description) return res.json({ error: "an input missing!" });
+    let date = new Date();
+    date = `${
+      days[date.getDay()]
+    }, ${date.getDate()} ${date.getMonth()} ${date.getFullYear()}`;
 
-  let date = new Date();
-  date = `${
-    days[date.getDay()]
-  }, ${date.getDate()} ${date.getMonth()} ${date.getFullYear()}`;
-  const tags = body.tags.split("#");
+    const tags = body.tags.split("#");
 
-  const blog = new Blog({
-    ...body,
-    tags,
-    date,
-    image: req.file.path,
-  });
+    const blog = new Blog({
+      ...body,
+      tags,
+      date,
+      src: req.file.path,
+      user: user.id,
+    });
 
-  try {
-    let savedBlog = await blog.save();
-    const refactoredBlog = blogRefactoring(savedBlog);
-    res.send(refactoredBlog).status(200);
-  } catch (error) {
-    res.status(400).json({ error: error.message });
+    try {
+      let savedBlog = await blog.save();
+      user.blogs = user.blogs.concat(savedBlog);
+      await user.save();
+      const refactoredBlog = blogRefactoring(savedBlog);
+      res.send(refactoredBlog).status(200);
+    } catch (error) {
+      next(error);
+    }
   }
-});
+);
 
-blogRouter.get("/", async (req, res) => {
+blogRouter.get("/", async (req, res, next) => {
   console.log("in get blog router");
   try {
-    const allBlogs = await Blog.find();
+    const allBlogs = await Blog.find().populate("user", {
+      email: 1,
+      profession: 1,
+      number: 1,
+      blogs: 1,
+    });
     let refactoredBlogs = [];
     allBlogs.map((b) => {
       refactoredBlogs = refactoredBlogs.concat(blogRefactoring(b));
@@ -91,7 +108,18 @@ blogRouter.get("/", async (req, res) => {
 
     res.send(refactoredBlogs);
   } catch (error) {
-    res.status(404).json({ error: error.message });
+    next(error);
+  }
+});
+
+blogRouter.put("/", async (req, res, next) => {
+  const { body } = req;
+  const id = body.id;
+  try {
+    const updatedBlog = await Blog.findByIdAndUpdate(id, body, { new: true });
+    res.send(blogRefactoring(updatedBlog));
+  } catch (error) {
+    next(error);
   }
 });
 

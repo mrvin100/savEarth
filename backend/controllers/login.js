@@ -1,33 +1,33 @@
-const loginRouter = require('express').Router()
-const User = require('../models/user')
-const jwt = require('jsonwebtoken')
-const bcrypt = require('bcrypt')
+const loginRouter = require("express").Router();
+const User = require("../models/user");
+const jwt = require("jsonwebtoken");
+const bcrypt = require("bcrypt");
 
-loginRouter.post('/', async (req, res) => {
-    console.log(req.body)
-    const {email, password} = req.body
-    console.log(email, password)
+loginRouter.post("/", async (req, res, next) => {
+  console.log(req.body);
+  const { email, password } = req.body;
+  console.log(email, password);
 
-    const user = await User.findOne({email})
-    console.log(user)
-    const passwordCorrect = user === null 
-        ? false : bcrypt.compare(password, user.password)
+  const user = await User.findOne({ email });
+  console.log(user);
+  const passwordCorrect =
+    user === null ? false : bcrypt.compare(password, user.password);
 
-    if(!(user && passwordCorrect)) {
-        return res.status(404).json({error: 'wrong credentials'})
-    }
+  if (!(user && passwordCorrect)) {
+    return res.status(404).json({ error: "wrong credentials" });
+  }
 
-    const userToken = {
-        email,
-        id: user.id
-    }
-    const token = jwt.sign(userToken, process.env.SECRET)
+  const userToken = {
+    email,
+    id: user.id,
+  };
+  const token = jwt.sign(userToken, process.env.SECRET);
 
-    try {
-        res.status(200).send({token, email})
-    } catch (error) {
-        res.status(404).json({error: error.message})
-    }
-})
+  try {
+    res.status(200).send({ token, email });
+  } catch (error) {
+    next(error);
+  }
+});
 
-module.exports = loginRouter
+module.exports = loginRouter;
