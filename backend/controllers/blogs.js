@@ -1,6 +1,6 @@
 const blogRouter = require("express").Router();
 const Blog = require("../models/blog");
-const User = require("../models/user");
+
 const multer = require("multer");
 const { userExtractor } = require("../utils/middlewares");
 
@@ -8,8 +8,9 @@ const { PORT, HOST } = process.env;
 
 function blogRefactoring(savedBlog) {
   const link = savedBlog.src.split(" ").join("%20");
-  // console.log(link);
+
   return {
+    id: savedBlog.id,
     title: savedBlog.title,
     date: savedBlog.date,
     description: savedBlog.description,
@@ -112,12 +113,40 @@ blogRouter.get("/", async (req, res, next) => {
   }
 });
 
-blogRouter.put("/", async (req, res, next) => {
-  const { body } = req;
+blogRouter.get("/:id", userExtractor, async (req, res, next) => {
+  try {
+    const blog = await Blog.findById(req.params.id).populate("user");
+    res.send(blog);
+  } catch (error) {
+    next(error);
+  }
+});
+
+blogRouter.put("/", userExtractor, async (req, res, next) => {
+  let { body } = req;
+  body = { ...body, tags: body.tags.split("#") };
   const id = body.id;
   try {
-    const updatedBlog = await Blog.findByIdAndUpdate(id, body, { new: true });
-    res.send(blogRefactoring(updatedBlog));
+    const blog = await Blog.findById(id);
+    if (req.user.id.toString() === blog.user.toString()) {
+      const updatedBlog = await Blog.findByIdAndUpdate(id, body, { new: true });
+      res.send(blogRefactoring(updatedBlog));
+    }
+    res.status(404).end();
+  } catch (error) {
+    next(error);
+  }
+});
+
+blogRouter.delete("/:id", userExtractor, async (req, res, next) => {
+  const { id } = req.params;
+  const user = req.user;
+  try {
+    const blog = await Blog.findById(id);
+    console.log(user.id, blog.user);
+    user.id.toString() === blog.user.toString() &&
+      (await Blog.findByIdAndDelete(id));
+    res.status(204).end();
   } catch (error) {
     next(error);
   }

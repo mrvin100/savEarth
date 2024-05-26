@@ -38,7 +38,6 @@ app.use(tokenExtractor);
 app.use("/api/user", userRouter);
 app.use("/api/login", loginRouter);
 app.use("/api/blogs", blogRouter);
-app.use("/api/images", imageRouter);
 
 app.use(unknownEndpoint);
 app.use(errorHandler);

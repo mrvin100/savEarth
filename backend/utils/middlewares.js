@@ -32,7 +32,6 @@ const logger = (req, res, next) => {
 
 const tokenExtractor = (req, res, next) => {
   const authorization = req.get("authorization");
-
   if (authorization && authorization.startsWith("Bearer ")) {
     req.token = authorization.replace("Bearer ", "");
   }
@@ -40,6 +39,8 @@ const tokenExtractor = (req, res, next) => {
 };
 
 async function userExtractor(req, res, next) {
+  console.log(req.token);
+
   let user;
   try {
     user = jwt.verify(req.token, process.env.SECRET);
