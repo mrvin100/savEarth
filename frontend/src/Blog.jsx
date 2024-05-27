@@ -86,7 +86,7 @@ export default function Blog() {
       tags: ["software development", "Tools", "Saas"],
     },
   ];
-  const [posts, setPosts] = useState(initPosts);
+  const [posts, setPosts] = useState([]);
   useEffect(() => {
     fetch("http://localhost:3000/api/blogs")
       .then((datas) => datas.json())
