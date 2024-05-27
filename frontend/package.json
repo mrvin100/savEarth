@@ -10,6 +10,9 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@tanstack/react-query": "^5.37.1",
+    "axios": "^1.7.2",
+    "form-data": "^4.0.0",
     "react": "^18.3.1",
     "react-dom": "^18.2.0",
     "react-router-dom": "^6.23.1",

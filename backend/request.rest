@@ -13,16 +13,36 @@ Content-Type: application/json
 
 {
     "email": "stac@gmail.com",
-    "password": "123@123@"
+    "password": "azerty@azerty"
 }
 
 ###
 post http://localhost:3000/api/blogs
 Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InN0YWNAZ21haWwuY29tIiwiaWQiOiI2NjUwZjBhYzM4ZGQ4NjEyNTRiODdlOTAiLCJpYXQiOjE3MTY3MTcxNDd9.1_01Xrb58nAH3xYjkTq-ZOBEDLGLdsJBXFkSk_FTGDk
 
 {
+    "title": "a post from the rest vsCode extension",
     "description": "second rest test with date resolve V2",
     "tags": "test#code"
 }
 ###
 get http://localhost:3000/api/blogs
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InN0YWNAZ21haWwuY29tIiwiaWQiOiI2NjUwZjBhYzM4ZGQ4NjEyNTRiODdlOTAiLCJpYXQiOjE3MTY3MTcxNDd9.1_01Xrb58nAH3xYjkTq-ZOBEDLGLdsJBXFkSk_FTGDk
+
+###
+delete http://localhost:3000/api/blogs/6652d277c87a48acd474a286
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InN0YWNAZ21haWwuY29tIiwiaWQiOiI2NjUwZjBhYzM4ZGQ4NjEyNTRiODdlOTAiLCJpYXQiOjE3MTY3MTcxNDd9.1_01Xrb58nAH3xYjkTq-ZOBEDLGLdsJBXFkSk_FTGDk
+
+###
+put http://localhost:3000/api/blogs/
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InN0YWNAZ21haWwuY29tIiwiaWQiOiI2NjUwZjBhYzM4ZGQ4NjEyNTRiODdlOTAiLCJpYXQiOjE3MTY3MTcxNDd9.1_01Xrb58nAH3xYjkTq-ZOBEDLGLdsJBXFkSk_FTGDk
+Content-Type: application/json
+
+{
+    "id": "6652d56b8eacafd5072003d9",
+    "title": "atest#test#test",
+    "description": "a test to see if added blog is actually being saved in blogs ref in to user model",
+    "tags": "test#code#rest",
+    "file": "images/blogs/1716704619195wall3.jpg"
+}
