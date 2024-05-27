@@ -1,8 +1,11 @@
 import { Link, useNavigate } from 'react-router-dom'
+import { useDispatch } from 'react-redux'
+import { setNotification } from './stores/NotificationReducer'
 
 import { useState } from 'react'
 import registerImg from './img/user-with-bag.png'
-import { postData } from './services/requests'
+import { registerRequest } from './services/requests'
+import { useMutation } from '@tanstack/react-query'
 
 export default function Register() {
   const [userInfos, setUserInfos] = useState({
@@ -13,26 +16,31 @@ export default function Register() {
   })
 
   const navigate = useNavigate()
+  const dispatch = useDispatch()
 
   function handleInputs(e) {
     const { value, name } = e.target
     setUserInfos({ ...userInfos, [name]: value })
   }
 
+  const registerMutation = useMutation({
+    mutationFn: registerRequest,
+    onSuccess: () => navigate('/login'),
+    onError: (error) => {
+      console.log(error)
+      dispatch(setNotification({ msg: error.response.data.error, clr: 'red' }))
+    },
+  })
+
   async function handleSubmit(e) {
     e.preventDefault()
-    try {
-      await postData({ ...userInfos, number: Number(userInfos.number) }, 'user')
-      navigate('/login')
-    } catch (error) {
-      console.log(error)
-    }
+    registerMutation.mutate(userInfos)
   }
 
   return (
-    <section class='login-register-section container'>
-      <div class='content'>
-        <h1 class='heading'>
+    <section className='login-register-section container'>
+      <div className='content'>
+        <h1 className='heading'>
           Sign up
           <span>
             {' '}
@@ -42,7 +50,7 @@ export default function Register() {
         <p>
           If you already have an account, <br />
           You can{' '}
-          <Link to='/login' class='link'>
+          <Link to='/login' className='link'>
             Login here!
           </Link>
         </p>

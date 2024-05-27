@@ -1,16 +1,12 @@
 import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
-// import { getUser } from '../services/requests'
 
 export default function Dashboard() {
-  // const [user, setUser] = useState('')
-  // useEffect(() => {
-  //   getUser('user').then((res) => setUser(res))
-  // }, [])
+  const user = JSON.parse(window.localStorage.getItem('userToken'))
 
   return (
     <section className='dashboard container'>
-      <h1 className='heading'>Your welcome user</h1>
+      <h1 className='heading'>Your welcome {user.email}</h1>
       <div className='box_container'>
         <div className='box'>
           <h3 className='heading'>about me</h3>
@@ -19,8 +15,8 @@ export default function Dashboard() {
         </div>
         <div className='box'>
           <h3 className='heading'>posts</h3>
-          <span className='subtitle'>05</span>
-          <Link to='/posts' className='btn'>
+          <span className='subtitle'>5</span>
+          <Link to={`/posts/${user.id}`} className='btn'>
             view posts
           </Link>
         </div>

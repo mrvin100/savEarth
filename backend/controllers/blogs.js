@@ -59,7 +59,7 @@ blogRouter.post(
       4: "Thursday",
       5: "Friday",
       6: "Saturday",
-      7: "Suncday",
+      0: "Sunday",
     };
 
     const { body } = req;
@@ -67,8 +67,9 @@ blogRouter.post(
     if (!body.description) return res.json({ error: "an input missing!" });
 
     let date = new Date();
+
     date = `${
-      days[date.getDay()]
+      days[date.getUTCDay()]
     }, ${date.getDate()} ${date.getMonth()} ${date.getFullYear()}`;
 
     const tags = body.tags.split("#");
@@ -85,8 +86,8 @@ blogRouter.post(
       let savedBlog = await blog.save();
       user.blogs = user.blogs.concat(savedBlog);
       await user.save();
-      const refactoredBlog = blogRefactoring(savedBlog);
-      res.send(refactoredBlog).status(200);
+
+      res.send(blogRefactoring(savedBlog)).status(200);
     } catch (error) {
       next(error);
     }

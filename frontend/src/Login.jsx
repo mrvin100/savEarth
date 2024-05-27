@@ -1,7 +1,10 @@
 import { useState } from 'react'
 import loginImg from './img/user-with-bag.png'
 import { Link, useNavigate } from 'react-router-dom'
-import { postData } from './services/requests'
+import { loginRequest, setToken } from './services/requests'
+import { useMutation } from '@tanstack/react-query'
+import { setNotification } from './stores/NotificationReducer'
+import { useDispatch } from 'react-redux'
 
 export default function Login() {
   const [userCredentials, setUserCredentials] = useState({
@@ -9,21 +12,30 @@ export default function Login() {
     password: '',
   })
   const navigate = useNavigate()
+  const dispatch = useDispatch()
 
   function handleInputs(e) {
     const { value, name } = e.target
     setUserCredentials({ ...userCredentials, [name]: value })
   }
 
+  const loginMutation = useMutation({
+    mutationFn: loginRequest,
+    onSuccess: (res) => {
+      window.localStorage.setItem('userToken', JSON.stringify(res))
+      setToken(res)
+      dispatch(setNotification({ msg: 'login successfull', clr: 'green' }))
+      navigate('/dashboard')
+    },
+    onError: (error) => {
+      console.log(error)
+      dispatch(setNotification({ msg: error.response.data.error, clr: 'red' }))
+    },
+  })
+
   async function handleSubmit(e) {
     e.preventDefault()
-    try {
-      const res = await postData(userCredentials, 'login')
-      window.localStorage.setItem('userToken', JSON.stringify(res))
-      navigate('/dashboard')
-    } catch (error) {
-      console.log(error)
-    }
+    loginMutation.mutate(userCredentials)
   }
 
   return (

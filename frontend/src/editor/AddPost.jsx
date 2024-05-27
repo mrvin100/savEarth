@@ -1,7 +1,8 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { postData } from '../services/requests'
+import { postBlogRequest } from '../services/requests'
 import FormData from 'form-data'
+import { useMutation, useQueryClient } from '@tanstack/react-query'
 
 export default function AddPost() {
   const [blogInfos, setBlogInfos] = useState({
@@ -11,6 +12,18 @@ export default function AddPost() {
     file: '',
   })
   const navigate = useNavigate()
+  const queryClient = useQueryClient()
+  const addPostMutation = useMutation({
+    mutationFn: postBlogRequest,
+    onSuccess: (res) => {
+      const blogs = queryClient.getQueryData(['blogs'])
+      console.log(blogs)
+      queryClient.setQueryData(['blogs'], blogs.concat(res))
+
+      // navigate(`/posts/${res.user}`)
+    },
+    onError: (error) => console.log(error),
+  })
 
   function handleInputs(e) {
     const { value, name } = e.target
@@ -19,27 +32,30 @@ export default function AddPost() {
 
   async function handleSubmit(e) {
     e.preventDefault()
-    console.log(JSON.parse(window.localStorage.getItem('userToken')).token)
+    // console.log(JSON.parse(window.localStorage.getItem('userToken')).token)
     const blogData = new FormData()
     blogData.append('title', blogInfos.title)
     blogData.append('tags', blogInfos.tags)
     blogData.append('description', blogInfos.description)
     blogData.append('file', blogInfos.file)
-    try {
-      fetch(`http://localhost:3000/api/blogs`, {
-        body: blogData,
-        method: 'POST',
-        headers: {
-          Authorization: `Bearer ${
-            JSON.parse(window.localStorage.getItem('userToken')).token
-          }`,
-        },
-      })
-        .then((res) => res.json())
-        .then((data) => console.log(data))
-    } catch (error) {
-      console.log(error)
-    }
+
+    addPostMutation.mutate(blogData)
+    // try {
+    //   const res = await postBlogRequest(blogData)
+    // fetch(`http://localhost:3000/api/blogs`, {
+    //   body: blogData,
+    //   method: 'POST',
+    //   headers: {
+    //     Authorization: `Bearer ${
+    //       JSON.parse(window.localStorage.getItem('userToken')).token
+    //     }`,
+    //   },
+    // })
+    //   .then((res) => res.json())
+    //   .then((data) => console.log(data))
+    // } catch (error) {
+    //   console.log(error)
+    // }
   }
 
   return (
