@@ -25,10 +25,10 @@ export default function Post({ post }) {
       </div>
       <div className="details">
         <div className="date">{date}</div>
-        <a href="#" className="link hide_text">
+        <Link to="/view-post" className="link hide_text">
           {title}
           <i className="bx bx-right-down-arrow-circle"></i>
-        </a>
+        </Link>
         <p className="hide_text">{description}</p>
         <div className="tags">
           {tags.map((tag) => {

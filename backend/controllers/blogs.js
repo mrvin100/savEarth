@@ -50,7 +50,8 @@ blogRouter.post(
   userExtractor,
   upload.single("file"),
   async (req, res, next) => {
-    if (!req.file) return res.json({ error: "invalid file extension" });
+    if (!req.file)
+      return res.status(500).send({ error: "invalid file extension" });
     const user = req.user;
     const days = {
       1: "Monday",
@@ -64,7 +65,8 @@ blogRouter.post(
 
     const { body } = req;
     console.log(body);
-    if (!body.description) return res.json({ error: "an input missing!" });
+    if (!body.description)
+      return res.status(500).send({ error: "an input missing!" });
 
     let date = new Date();
 
