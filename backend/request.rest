@@ -46,3 +46,7 @@ Content-Type: application/json
     "tags": "test#code#rest",
     "file": "images/blogs/1716704619195wall3.jpg"
 }
+
+###
+get http://localhost:3000/api/user/6650f0ac38dd861254b87e90
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InN0YWNAZ21haWwuY29tIiwiaWQiOiI2NjUwZjBhYzM4ZGQ4NjEyNTRiODdlOTAiLCJpYXQiOjE3MTY3MTcxNDd9.1_01Xrb58nAH3xYjkTq-ZOBEDLGLdsJBXFkSk_FTGDk

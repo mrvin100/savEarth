@@ -11,7 +11,7 @@ loginRouter.post("/", async (req, res, next) => {
   const user = await User.findOne({ email });
   console.log(user);
   const passwordCorrect =
-    user === null ? false : bcrypt.compare(password, user.password);
+    user === null ? false : await bcrypt.compare(password, user.password);
 
   if (!(user && passwordCorrect)) {
     return res.status(404).json({ error: "wrong credentials" });
