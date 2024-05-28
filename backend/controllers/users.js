@@ -47,7 +47,6 @@ userRouter.get("/:id", userExtractor, async (req, res, next) => {
     const response = await User.findById(id).populate("blogs");
 
     res.send({
-      ...response,
       blogs: response.blogs.map((r) => blogRefactoring(r)),
     });
   } catch (error) {

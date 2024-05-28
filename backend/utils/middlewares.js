@@ -39,8 +39,6 @@ const tokenExtractor = (req, res, next) => {
 };
 
 async function userExtractor(req, res, next) {
-  console.log(req.token);
-
   let user;
   try {
     user = jwt.verify(req.token, process.env.SECRET);

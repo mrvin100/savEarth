@@ -3,6 +3,9 @@ import { useNavigate } from 'react-router-dom'
 import { postBlogRequest } from '../services/requests'
 import FormData from 'form-data'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
+import { useDispatch } from 'react-redux'
+import { appendBlog } from '../stores/blogReducer'
+import { setNotification } from '../stores/NotificationReducer'
 
 export default function AddPost() {
   const [blogInfos, setBlogInfos] = useState({
@@ -11,18 +14,27 @@ export default function AddPost() {
     description: '',
     file: '',
   })
+  const dispatch = useDispatch()
   const navigate = useNavigate()
   const queryClient = useQueryClient()
   const addPostMutation = useMutation({
     mutationFn: postBlogRequest,
     onSuccess: (res) => {
-      const blogs = queryClient.getQueryData(['blogs'])
-      console.log(blogs)
-      queryClient.setQueryData(['blogs'], blogs.concat(res))
+      // const blogs = queryClient.getQueryData(['blogs'])
+      // console.log(blogs)
+      // queryClient.setQueryData(['blogs'], blogs.concat(res))
+      console.log(res)
+      dispatch(appendBlog(res))
 
-      // navigate(`/posts/${res.user}`)
+      navigate(`/posts`)
     },
-    onError: (error) => console.log(error),
+    onError: (error) =>
+      dispatch(
+        setNotification({
+          msg: setNotification(error.response.data.error),
+          clr: 'red',
+        })
+      ),
   })
 
   function handleInputs(e) {

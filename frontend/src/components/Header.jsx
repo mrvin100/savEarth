@@ -1,6 +1,5 @@
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
-import Notification from './Notification'
 
 const items = [
   { key: 'home', label: 'home' },
@@ -44,7 +43,6 @@ export default function Header() {
   }
   return (
     <header className='header'>
-      <Notification />
       <div className='offers'>
         <i className='bx bx-sticker'></i>
         <p>join the 30% of activists who save a life!</p>

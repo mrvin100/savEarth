@@ -3,6 +3,8 @@ import { useQuery } from '@tanstack/react-query'
 
 import Post from './components/Post'
 import { getData } from './services/requests'
+import { useDispatch, useSelector } from 'react-redux'
+import { setBlogs } from './stores/blogReducer'
 
 function Blog() {
   // const blogDatas = [];
@@ -88,18 +90,21 @@ function Blog() {
       tags: ['software development', 'Tools', 'Saas'],
     },
   ]
+  const dispatch = useDispatch()
 
-  const res = useQuery({
-    queryKey: ['blogs'],
-    queryFn: () => getData('blogs'),
-    retry: 1,
-  })
+  // const res = useQuery({
+  //   queryKey: ['blogs'],
+  //   queryFn: () => getData('blogs'),
+  //   retry: 1,
+  // })
 
-  if (res.isLoading) return <div>loading...</div>
+  // if (res.isLoading) return <div>loading...</div>
 
-  if (res.isError) return <div>request failed</div>
+  // if (res.isError) return <div>request failed</div>
+  // dispatch(setBlogs(res.data))
+  let posts = useSelector((state) => state.blogs)
 
-  const posts = initPosts.concat(...res.data)
+  // posts = posts.concat(...initPosts)
   return (
     <section className='blog container'>
       <h1 className='heading'>Recent blog posts</h1>
