@@ -1,4 +1,3 @@
-import { Link, useNavigate } from 'react-router-dom'
 import { useDispatch } from 'react-redux'
 import { setNotification } from './stores/NotificationReducer'
 
@@ -6,6 +5,7 @@ import { useState } from 'react'
 import registerImg from './img/user-with-bag.png'
 import { registerRequest } from './services/requests'
 import { useMutation } from '@tanstack/react-query'
+import { Link, useNavigate } from 'react-router-dom'
 
 export default function Register() {
   const [userInfos, setUserInfos] = useState({
@@ -121,7 +121,7 @@ export default function Register() {
           />
         </div>
         <p className='privacy'>
-          <label for='remember-me'>
+          <label htmlFor='remember-me'>
             <input type='checkbox' id='remember-me' /> I agree with{' '}
             <strong>Privacy Policy</strong> and <strong>Terms of Use</strong>.
           </label>

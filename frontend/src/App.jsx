@@ -9,37 +9,19 @@ import Dashboard from './editor/Dashboard'
 import UpdatePost from './editor/UpdatePost'
 import { Route, Routes, BrowserRouter } from 'react-router-dom'
 import Posts from './editor/Posts'
-import { useEffect, useState } from 'react'
-import { getUser, setToken } from './services/requests'
+import { useEffect } from 'react'
+import { setToken } from './services/requests'
 import Notification from './components/Notification'
-
-import { useQuery } from '@tanstack/react-query'
 import { initialBlogs } from './stores/blogReducer'
 import { useDispatch } from 'react-redux'
-import { setUserBlogs } from './stores/userBlogsReducer'
 
 function App() {
-  const [userData, setUserData] = useState(null)
   const dispatch = useDispatch()
   useEffect(() => {
     const data = JSON.parse(window.localStorage.getItem('userToken'))
-    setUserData(data)
-    setToken(data)
-
+    data && setToken(data)
     dispatch(initialBlogs())
   }, [])
-
-  // if (userData) {
-  //   const res = useQuery({
-  //     queryKey: ['userBlogs'],
-  //     queryFn: () => getUser(userData.id),
-  //   })
-  //   if (res.isLoading) return <div>loading...</div>
-
-  //   console.log(res.data)
-
-  //   dispatch(setUserBlogs(res.data))
-  // }
 
   return (
     <BrowserRouter>

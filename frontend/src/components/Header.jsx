@@ -5,7 +5,6 @@ const items = [
   { key: 'home', label: 'home' },
   { key: 'blog', label: 'blog', isdropdown: true },
   { key: 'donations', label: 'donations', isdropdown: true },
-  { key: 'contact', label: 'contact' },
   { key: 'login', label: 'login' },
   { key: 'register', label: 'register' },
   { key: 'dashboard', label: 'dashboard' },
@@ -14,21 +13,33 @@ const items = [
 // Navbar component starts
 
 const Navbar = ({ items, status, toggle }) => {
+  const [theme, setTheme] = useState(false)
+  const changeTheme = () => {
+    setTheme(!theme)
+    console.log(`theme is changed: ${theme}`)
+    document.body.classList.toggle('dark')
+  }
+
   return (
     <nav className={`navbar ${status ? 'show' : ''}`}>
       {items.map((item) => (
         <Link
           key={item.label}
           to={`/${item.label}`}
-          onClick={toggle}
+          // onClick={toggle}
           className='nav_link'
         >
           {item.label}
           {item.isdropdown ? <i className='bx bx-chevron-down'></i> : ''}
         </Link>
       ))}
+
       <div className='icons'>
-        <div id='moon-icon' className='bx bx-moon icon'></div>
+        <div
+          id='moon-icon'
+          className='bx bx-moon icon'
+          onClick={changeTheme}
+        ></div>
         <div id='close-icon' className='bx bx-x icon' onClick={toggle}></div>
       </div>
     </nav>
@@ -46,14 +57,14 @@ export default function Header() {
       <div className='offers'>
         <i className='bx bx-sticker'></i>
         <p>join the 30% of activists who save a life!</p>
-        <a href='#' className='link'>
+        <Link to='donations' className='link'>
           Donate now <i className='fas fa-bolt'></i>
-        </a>
+        </Link>
       </div>
       <div className='main-header container'>
-        <a href='#' className='logo'>
+        <Link to='/home' className='logo'>
           <sup>sav.</sup>Earth
-        </a>
+        </Link>
 
         {/* navbar component starts */}
 
@@ -71,12 +82,18 @@ export default function Header() {
 
         <div className='icons'>
           <div id='search-icon' className='bx bx-search icon'></div>
-          <div id='user-icon' className='bx bx-user icon'></div>
+          <Link
+            to='/dashboard'
+            id='user-icon'
+            title='dashboard'
+            className='bx bx-user icon'
+          ></Link>
           <div className='bx bx-shopping-bag icon'></div>
           <div
             id='menu-icon'
             className='bx bx-grid-alt icon'
             onClick={toggleNavbar}
+            style={{ opacity: navbar ? 0 : 1 }}
           ></div>
         </div>
       </div>

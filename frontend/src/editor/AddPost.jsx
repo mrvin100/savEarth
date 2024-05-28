@@ -2,7 +2,7 @@ import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { postBlogRequest } from '../services/requests'
 import FormData from 'form-data'
-import { useMutation, useQueryClient } from '@tanstack/react-query'
+import { useMutation } from '@tanstack/react-query'
 import { useDispatch } from 'react-redux'
 import { appendBlog } from '../stores/blogReducer'
 import { setNotification } from '../stores/NotificationReducer'
@@ -16,17 +16,13 @@ export default function AddPost() {
   })
   const dispatch = useDispatch()
   const navigate = useNavigate()
-  const queryClient = useQueryClient()
+
   const addPostMutation = useMutation({
     mutationFn: postBlogRequest,
     onSuccess: (res) => {
-      // const blogs = queryClient.getQueryData(['blogs'])
-      // console.log(blogs)
-      // queryClient.setQueryData(['blogs'], blogs.concat(res))
       console.log(res)
       dispatch(appendBlog(res))
-
-      navigate(`/posts`)
+      navigate(`/posts/${res.user}`)
     },
     onError: (error) =>
       dispatch(
@@ -44,7 +40,7 @@ export default function AddPost() {
 
   async function handleSubmit(e) {
     e.preventDefault()
-    // console.log(JSON.parse(window.localStorage.getItem('userToken')).token)
+
     const blogData = new FormData()
     blogData.append('title', blogInfos.title)
     blogData.append('tags', blogInfos.tags)
@@ -52,22 +48,6 @@ export default function AddPost() {
     blogData.append('file', blogInfos.file)
 
     addPostMutation.mutate(blogData)
-    // try {
-    //   const res = await postBlogRequest(blogData)
-    // fetch(`http://localhost:3000/api/blogs`, {
-    //   body: blogData,
-    //   method: 'POST',
-    //   headers: {
-    //     Authorization: `Bearer ${
-    //       JSON.parse(window.localStorage.getItem('userToken')).token
-    //     }`,
-    //   },
-    // })
-    //   .then((res) => res.json())
-    //   .then((data) => console.log(data))
-    // } catch (error) {
-    //   console.log(error)
-    // }
   }
 
   return (
