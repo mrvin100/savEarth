@@ -861,6 +861,7 @@ h3.heading {
 
 .view-post {
   max-width: 768px;
+  border-bottom: var(--s2-border-black);
   .intro {
     position: relative;
     margin-bottom: 6rem;
