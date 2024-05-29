@@ -27,7 +27,7 @@ export default function AddPost() {
     onError: (error) =>
       dispatch(
         setNotification({
-          msg: setNotification(error.response.data.error),
+          msg: error.response.data.error,
           clr: 'red',
         })
       ),

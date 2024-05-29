@@ -1,32 +1,29 @@
-import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import { setUserBlogs } from '../stores/userBlogsReducer'
 import { useQuery } from '@tanstack/react-query'
 import { getUser } from '../services/requests'
-import { getUserIds } from '../stores/userReducer'
 
 export default function Dashboard() {
-  const user = useSelector(({ user }) => {
-    console.log(user)
-    return user
-  })
-
   const dispatch = useDispatch()
-  useEffect(() => {
-    dispatch(getUserIds())
-  }, [])
+  const user = useSelector(({ user }) => user)
+  const posts = useSelector(({ userBlogs }) => userBlogs)
+
+  async function fetchUser() {
+    const res = await getUser(user.id)
+    dispatch(setUserBlogs(res.blogs))
+    return res
+  }
+
   const res = useQuery({
     queryKey: ['userBlogs'],
-    queryFn: () => getUser(user.id),
+    queryFn: fetchUser,
     retry: 2,
   })
 
   if (res.isLoading) return <div>loading...</div>
 
   if (res.isError) return <div>server internal error</div>
-
-  dispatch(setUserBlogs(res.data))
 
   return (
     <section className='dashboard container'>
@@ -39,7 +36,7 @@ export default function Dashboard() {
         </div>
         <div className='box'>
           <h3 className='heading'>posts</h3>
-          <span className='subtitle'>{res.data.blogs.length}</span>
+          <span className='subtitle'>{posts.length}</span>
           <Link to={`/posts/${user.id}`} className='btn'>
             view posts
           </Link>

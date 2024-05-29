@@ -50,7 +50,8 @@ blogRouter.post(
   userExtractor,
   upload.single("file"),
   async (req, res, next) => {
-    if (!req.file) return res.json({ error: "invalid file extension" });
+    if (!req.file)
+      return res.status(400).send({ error: "invalid file extension" });
     const user = req.user;
     const days = {
       1: "Monday",
@@ -64,7 +65,8 @@ blogRouter.post(
 
     const { body } = req;
     console.log(body);
-    if (!body.description) return res.json({ error: "an input missing!" });
+    if (!body.description)
+      return res.status(400).send({ error: "an input missing!" });
 
     let date = new Date();
 
@@ -114,39 +116,69 @@ blogRouter.get("/", async (req, res, next) => {
   }
 });
 
-blogRouter.get("/:id", userExtractor, async (req, res, next) => {
+blogRouter.get("/:id", async (req, res, next) => {
   try {
-    const blog = await Blog.findById(req.params.id).populate("user");
-    res.send(blog);
+    const blog = await Blog.findById(req.params.id).populate("user", {
+      email: 1,
+    });
+    res.send(blogRefactoring(blog));
   } catch (error) {
     next(error);
   }
 });
 
-blogRouter.put("/", userExtractor, async (req, res, next) => {
-  let { body } = req;
-  body = { ...body, tags: body.tags.split("#") };
-  const id = body.id;
-  try {
-    const blog = await Blog.findById(id);
-    if (req.user.id.toString() === blog.user.toString()) {
-      const updatedBlog = await Blog.findByIdAndUpdate(id, body, { new: true });
-      res.send(blogRefactoring(updatedBlog));
+blogRouter.put(
+  "/",
+  userExtractor,
+  upload.single("file"),
+  async (req, res, next) => {
+    if (!req.file)
+      return res.status(400).send({ error: "invalid file extension" });
+
+    let { body } = req;
+
+    if (!body.title || !body.tags || !body.description)
+      return res.status(402).send({ error: "some inputs are missing" });
+
+    body = { ...body, tags: body.tags.split("#") };
+    const id = body.id;
+    console.log("incomming blog:", body);
+    try {
+      const blog = await Blog.findById(id);
+      const newBlog = {
+        ...blog.doc,
+        title: body.title,
+        tags: body.tags,
+        src: req.file.path,
+        description: body.description,
+      };
+      console.log("newBlog:", newBlog);
+      if (req.user.id.toString() === blog.user.toString()) {
+        const updatedBlog = await Blog.findByIdAndUpdate(id, newBlog, {
+          new: true,
+        });
+        console.log("updatedBlog:", updatedBlog);
+        res.send(blogRefactoring(updatedBlog));
+      }
+      res.status(404).end();
+    } catch (error) {
+      next(error);
     }
-    res.status(404).end();
-  } catch (error) {
-    next(error);
   }
-});
+);
 
 blogRouter.delete("/:id", userExtractor, async (req, res, next) => {
   const { id } = req.params;
   const user = req.user;
   try {
     const blog = await Blog.findById(id);
-    console.log(user.id, blog.user);
+
     user.id.toString() === blog.user.toString() &&
       (await Blog.findByIdAndDelete(id));
+
+    user.blogs = user.blogs.filter((b) => b !== id);
+    await user.save();
+
     res.status(204).end();
   } catch (error) {
     next(error);

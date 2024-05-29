@@ -1,45 +1,52 @@
-/* eslint-disable react/prop-types */
+import { Link } from 'react-router-dom'
+import { useDispatch } from 'react-redux'
 
-import { Link } from "react-router-dom";
+export default function Post({ post, Delete }) {
+  const { src, date, title, description, tags, id } = post
+  const dispatch = useDispatch()
 
-export default function Post({ post }) {
-  const { src, date, title, description, tags } = post;
+  // function handleDeleteBlog() {
+  //   if () {
+  //     delete(id)
+  //   }
+  // }
+
   return (
-    <div className="box">
-      <div className="tools">
+    <div className='box'>
+      <div className='tools'>
         <Link
-          to="/update-post"
-          className="bx bx-edit icon"
-          title="update post"
+          to={`/update-post/${id}`}
+          className='bx bx-edit icon'
+          title='update post'
         ></Link>
         <div
-          className="bx bx-trash icon"
-          title="delete post"
-          onClick={() => {
-            return confirm("confirm delete this post?");
-          }}
+          className='bx bx-trash icon'
+          title='delete post'
+          onClick={() =>
+            confirm('are you sure to delete this blog?:', title) && Delete(id)
+          }
         ></div>
       </div>
-      <div className="image">
-        <img src={src} alt="post image" />
+      <div className='image'>
+        <img src={src} alt='post image' />
       </div>
-      <div className="details">
-        <div className="date">{date}</div>
-        <a href="#" className="link hide_text">
+      <div className='details'>
+        <div className='date'>{date}</div>
+        <a href='#' className='link hide_text'>
           {title}
-          <i className="bx bx-right-down-arrow-circle"></i>
+          <i className='bx bx-right-down-arrow-circle'></i>
         </a>
-        <p className="hide_text">{description}</p>
-        <div className="tags">
+        <p className='hide_text'>{description}</p>
+        <div className='tags'>
           {tags.map((tag) => {
             return (
-              <span key={tags.indexOf(tag)} className="tag">
+              <span key={tags.indexOf(tag)} className='tag'>
                 {tag}
               </span>
-            );
+            )
           })}
         </div>
       </div>
     </div>
-  );
+  )
 }

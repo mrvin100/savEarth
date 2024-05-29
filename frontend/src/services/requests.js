@@ -34,8 +34,19 @@ export async function updateBlogRequest(datas) {
 }
 
 export async function getUser(id) {
-  console.log(token)
   const config = { headers: { authorization: token } }
+  console.log(token)
   const { data } = await axios.get(`${baseUrl}/user/${id}`, config)
+  return data
+}
+
+export async function deleteBlogRequest(id) {
+  const config = { headers: { authorization: token } }
+  await axios.delete(`${baseUrl}/blogs/${id}`, config)
+  return id
+}
+
+export async function getBlogRequest(id) {
+  const { data } = await axios.get(`${baseUrl}/blogs/${id}`)
   return data
 }

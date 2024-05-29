@@ -54,4 +54,26 @@ userRouter.get("/:id", userExtractor, async (req, res, next) => {
   }
 });
 
+userRouter.put("/:id", userExtractor, async (req, res, next) => {
+  const { id } = req.params;
+  const { body } = req;
+
+  if (!body.email || !body.profession || !body.number)
+    return res.status(402).send({ error: "some inputs are missing" });
+
+  try {
+    const currentUser = User.findById(id);
+    const newUser = {
+      ...currentUser.doc,
+      email: body.email,
+      profession: body.profession,
+      number: body.number,
+    };
+    const updatedUser = User.findByIdAndUpdate(id, newUser, { new: true });
+    res.send(updatedUser);
+  } catch (error) {
+    next(error);
+  }
+});
+
 module.exports = userRouter;
