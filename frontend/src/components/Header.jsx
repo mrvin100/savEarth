@@ -90,7 +90,11 @@ export default function Header() {
             title="dashboard"
             className="bx bx-user icon"
           ></Link>
-          <div className="bx bx-shopping-bag icon"></div>
+          <Link
+            to="/donate"
+            title="donate now"
+            className="bx bx-donate-heart icon"
+          ></Link>
           <div
             id="menu-icon"
             className="bx bx-grid-alt icon"

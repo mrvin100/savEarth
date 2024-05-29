@@ -16,6 +16,7 @@ import { initialBlogs } from "./stores/blogReducer";
 import { useDispatch } from "react-redux";
 import ViewPost from "./ViewPost";
 import UpdateProfile from "./editor/UpdateProfile";
+import MyCollections from "./editor/MyCollections";
 
 function App() {
   const dispatch = useDispatch();
@@ -38,6 +39,7 @@ function App() {
         <Route path="/update-post" element={<UpdatePost />}></Route>
         <Route path="/dashboard" element={<Dashboard />}></Route>
         <Route path="/posts/:id" element={<Posts />}></Route>
+        <Route path="/my-collections" element={<MyCollections />}></Route>
         <Route path="/view-post" element={<ViewPost />}></Route>
         <Route path="/update-profile" element={<UpdateProfile />}></Route>
       </Routes>

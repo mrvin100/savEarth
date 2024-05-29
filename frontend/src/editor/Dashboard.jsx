@@ -60,7 +60,16 @@ export default function Dashboard() {
         <div className="box">
           <h3 className="heading">Donations</h3>
           <span className="subtitle">02</span>
-          <Link className="btn">my Donations</Link>
+          <Link to="/my-donations" className="btn">
+            my Donations
+          </Link>
+        </div>
+        <div className="box">
+          <h3 className="heading">collections</h3>
+          <span className="subtitle">10+</span>
+          <Link to="/my-collections" className="btn">
+            my collections
+          </Link>
         </div>
       </div>
     </section>
