@@ -1,8 +1,11 @@
 import { Link, useNavigate } from "react-router-dom";
 
 import { useState } from "react";
-import registerImg from "../img/user-with-bag.png";
-import { postData } from "../services/requests";
+import { updateUserInfos } from "../services/requests";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { useDispatch, useSelector } from "react-redux";
+import { setNotification } from "../stores/NotificationReducer";
+import { setUserInfos } from "../stores/userInfosReducer";
 
 export default function UpdateProfile() {
   const [userInfos, setUserInfos] = useState({
@@ -11,26 +14,33 @@ export default function UpdateProfile() {
     profession: "",
     number: "",
   });
+  const [user, setUser] = useState(null);
 
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const queryClient = useQueryClient();
 
   function handleInputs(e) {
     const { value, name } = e.target;
     setUserInfos({ ...userInfos, [name]: value });
   }
 
+  const submitMutation = useMutation({
+    mutationKey: ["submit"],
+    mutationFn: () => updateUserInfos,
+    onSuccess: (updatedUser) => {
+      dispatch(setUserInfos(updatedUser));
+      setUser(updatedUser);
+    },
+    onError: (error) => dispatch(setNotification(error.response.data.error)),
+  });
+
   async function handleSubmit(e) {
     e.preventDefault();
-    try {
-      await postData(
-        { ...userInfos, number: Number(userInfos.number) },
-        "user"
-      );
-      navigate("/login");
-    } catch (error) {
-      console.log(error);
-    }
+    submitMutation.mutate(userInfos);
   }
+
+  // const userinfo = useSelector(state => state.userInfos)
 
   return (
     <section className="login-register-section container">

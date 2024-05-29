@@ -40,6 +40,12 @@ export async function getUser(id) {
   return data
 }
 
+export async function updateUserInfos(data) {
+  const config = { headers: { authorization: token } }
+  const res = await axios.put(`${baseUrl}/user`, data, config)
+  return res.data
+}
+
 export async function deleteBlogRequest(id) {
   const config = { headers: { authorization: token } }
   await axios.delete(`${baseUrl}/blogs/${id}`, config)

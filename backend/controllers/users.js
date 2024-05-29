@@ -48,6 +48,7 @@ userRouter.get("/:id", userExtractor, async (req, res, next) => {
 
     res.send({
       blogs: response.blogs.map((r) => blogRefactoring(r)),
+      profession: response.profession,
     });
   } catch (error) {
     next(error);

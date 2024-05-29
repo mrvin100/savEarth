@@ -16,6 +16,10 @@ import { initialBlogs } from './stores/blogReducer'
 import { useDispatch } from 'react-redux'
 import { setUser } from './stores/userReducer'
 
+import ViewPost from './ViewPost'
+import UpdateProfile from './editor/UpdateProfile'
+import MyCollections from './editor/MyCollections'
+
 function App() {
   const dispatch = useDispatch()
   useEffect(() => {
@@ -32,14 +36,17 @@ function App() {
       <Notification />
       <Header />
       <Routes>
-        <Route path='/home' element={<Home />}></Route>
+        <Route path='/' element={<Home />}></Route>
         <Route path='/blog' element={<Blog />}></Route>
         <Route path='/login' element={<Login />}></Route>
         <Route path='/register' element={<Register />}></Route>
         <Route path='/add-post' element={<AddPost />}></Route>
-        <Route path='/update-post/:id' element={<UpdatePost />}></Route>
+        <Route path='/update-post' element={<UpdatePost />}></Route>
         <Route path='/dashboard' element={<Dashboard />}></Route>
         <Route path='/posts/:id' element={<Posts />}></Route>
+        <Route path='/my-collections' element={<MyCollections />}></Route>
+        <Route path='/view-post' element={<ViewPost />}></Route>
+        <Route path='/update-profile' element={<UpdateProfile />}></Route>
       </Routes>
     </BrowserRouter>
   )

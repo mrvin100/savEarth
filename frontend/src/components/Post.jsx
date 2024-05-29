@@ -1,15 +1,7 @@
 import { Link } from 'react-router-dom'
-import { useDispatch } from 'react-redux'
 
 export default function Post({ post, Delete }) {
   const { src, date, title, description, tags, id } = post
-  const dispatch = useDispatch()
-
-  // function handleDeleteBlog() {
-  //   if () {
-  //     delete(id)
-  //   }
-  // }
 
   return (
     <div className='box'>
@@ -32,10 +24,10 @@ export default function Post({ post, Delete }) {
       </div>
       <div className='details'>
         <div className='date'>{date}</div>
-        <a href='#' className='link hide_text'>
+        <Link to='/view-post' className='link hide_text'>
           {title}
           <i className='bx bx-right-down-arrow-circle'></i>
-        </a>
+        </Link>
         <p className='hide_text'>{description}</p>
         <div className='tags'>
           {tags.map((tag) => {
