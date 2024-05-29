@@ -20,10 +20,11 @@ import ViewPost from './ViewPost'
 import UpdateProfile from './editor/UpdateProfile'
 import MyCollections from './editor/MyCollections'
 
-function App() {
+export default function App() {
   const dispatch = useDispatch()
   useEffect(() => {
-    const data = JSON.parse(window.localStorage.getItem('userToken'))
+    const pureToken = window.localStorage.getItem('userToken')
+    const data = pureToken ? JSON.parse(pureToken) : null
     if (data) {
       setToken(data)
       dispatch(setUser(data))
@@ -45,11 +46,9 @@ function App() {
         <Route path='/dashboard' element={<Dashboard />}></Route>
         <Route path='/posts/:id' element={<Posts />}></Route>
         <Route path='/my-collections' element={<MyCollections />}></Route>
-        <Route path='/view-post' element={<ViewPost />}></Route>
-        <Route path='/update-profile' element={<UpdateProfile />}></Route>
+        <Route path='/view-post/:id' element={<ViewPost />}></Route>
+        <Route path='/update-profile/:id' element={<UpdateProfile />}></Route>
       </Routes>
     </BrowserRouter>
   )
 }
-
-export default App

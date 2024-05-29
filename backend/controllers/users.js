@@ -63,14 +63,19 @@ userRouter.put("/:id", userExtractor, async (req, res, next) => {
     return res.status(402).send({ error: "some inputs are missing" });
 
   try {
-    const currentUser = User.findById(id);
+    // const currentUser = User.findById(id);
     const newUser = {
-      ...currentUser.doc,
+      // ...currentUser.doc,
       email: body.email,
       profession: body.profession,
       number: body.number,
     };
-    const updatedUser = User.findByIdAndUpdate(id, newUser, { new: true });
+    console.log("new user", newUser);
+    const updatedUser = await User.findByIdAndUpdate(id, newUser, {
+      new: true,
+    });
+    delete updatedUser.password;
+    delete updatedUser.blogs;
     res.send(updatedUser);
   } catch (error) {
     next(error);

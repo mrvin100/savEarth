@@ -24,7 +24,7 @@ export default function Post({ post, Delete }) {
       </div>
       <div className='details'>
         <div className='date'>{date}</div>
-        <Link to='/view-post' className='link hide_text'>
+        <Link to={`/view-post/${id}`} className='link hide_text'>
           {title}
           <i className='bx bx-right-down-arrow-circle'></i>
         </Link>

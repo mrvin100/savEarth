@@ -43,7 +43,7 @@ export default function Dashboard() {
         <div className='box'>
           <h3 className='heading'>about me</h3>
           <span className='subtitle'>profile</span>
-          <Link to='/update-profile' className='btn'>
+          <Link to={`/update-profile/${user.id}`} className='btn'>
             update profile
           </Link>
         </div>
