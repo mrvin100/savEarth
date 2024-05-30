@@ -520,7 +520,7 @@ h3.heading {
       }
     }
   }
-  .box {
+  .box.view {
     border: var(--s2-border-black);
     padding: 1rem;
     width: 100%;
