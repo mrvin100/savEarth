@@ -40,10 +40,15 @@ export async function getUser(id) {
   return data
 }
 
-export async function updateUserInfos(data) {
+export async function updateUserRequest(data, id) {
   const config = { headers: { authorization: token } }
-  const res = await axios.put(`${baseUrl}/user`, data, config)
-  return res.data
+  const res = await axios.put(`${baseUrl}/user/${id}`, data, config)
+  const res2 = await loginRequest({
+    password: data.password,
+    email: res.data.email,
+  })
+
+  return res2
 }
 
 export async function deleteBlogRequest(id) {
