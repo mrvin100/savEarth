@@ -22,6 +22,7 @@ import { useDispatch } from "react-redux";
 import { setUser } from "./stores/userReducer";
 import { Route, Routes, BrowserRouter } from "react-router-dom";
 import AddCollect from "./editor/AddCollect";
+import UpdateCollect from "./editor/UpdateCollect";
 
 export default function App() {
   const dispatch = useDispatch();
@@ -46,6 +47,7 @@ export default function App() {
         <Route path="/login" element={<Login />}></Route>
         <Route path="/register" element={<Register />}></Route>
         <Route path="/add-post" element={<AddPost />}></Route>
+        <Route path="/update-collect" element={<UpdateCollect />}></Route>
         <Route path="/update-post/:id" element={<UpdatePost />}></Route>
         <Route path="/dashboard" element={<Dashboard />}></Route>
         <Route path="/posts/:id" element={<Posts />}></Route>

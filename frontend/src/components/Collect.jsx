@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 
 export default function Collect({ post }) {
-  const { date, title, description, tags } = post;
+  const { date, title, description } = post;
   return (
     <div className="box">
       <div className="tools">
@@ -25,15 +25,6 @@ export default function Collect({ post }) {
           <i className="bx bx-right-down-arrow-circle"></i>
         </Link>
         <p className="hide_text">{description}</p>
-        {/* <div className="tags">
-          {tags.map((tag) => {
-            return (
-              <span key={tags.indexOf(tag)} className="tag">
-                {tag}
-              </span>
-            );
-          })}
-        </div> */}
       </div>
     </div>
   );

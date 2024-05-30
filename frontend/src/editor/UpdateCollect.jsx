@@ -7,7 +7,7 @@ import { useDispatch } from "react-redux";
 import { appendBlog } from "../stores/blogReducer";
 import { setNotification } from "../stores/NotificationReducer";
 
-export default function AddCollect() {
+export default function UpdateCollect() {
   const [blogInfos, setBlogInfos] = useState({
     title: "",
     tags: "",
@@ -53,7 +53,7 @@ export default function AddCollect() {
   return (
     <section className="login-register-section container">
       <form className="form-container login" onSubmit={handleSubmit}>
-        <h1 className="heading">Add collect</h1>
+        <h1 className="heading">Update collect</h1>
         <div className="input_box">
           <input
             id="email"
@@ -74,6 +74,7 @@ export default function AddCollect() {
             onChange={handleInputs}
           />
         </div>
+
         <div className="input_box">
           <textarea
             name="description"
@@ -87,7 +88,12 @@ export default function AddCollect() {
             onChange={handleInputs}
           ></textarea>
         </div>
-        <input type="submit" value="create" name="add-post" className="btn" />
+        <input
+          type="submit"
+          value="update collect"
+          name="update-collect"
+          className="btn"
+        />
       </form>
     </section>
   );

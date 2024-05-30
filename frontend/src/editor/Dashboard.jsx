@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { setUserBlogs } from "../stores/userBlogsReducer";
 import { useQuery } from "@tanstack/react-query";
 import { getUser } from "../services/requests";
-import avatar from "../img/user-avatar.svg";
+import avatar from "../img/user-avatar.png";
 import { useState } from "react";
 
 export default function Dashboard() {

@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 
 const items = [
   { key: "blog", label: "blog", isdropdown: true },
-  { key: "donations", label: "donations", isdropdown: true },
+  { key: "collections", label: "collections", isdropdown: true },
   { key: "login", label: "login" },
   { key: "register", label: "register" },
   { key: "dashboard", label: "dashboard" },
@@ -59,7 +59,7 @@ export default function Header() {
       <div className="offers">
         <i className="bx bx-sticker"></i>
         <p>join the 30% of activists who save a life!</p>
-        <Link to="donations" className="link">
+        <Link to="/collections" className="link">
           Donate now <i className="fas fa-bolt"></i>
         </Link>
       </div>
