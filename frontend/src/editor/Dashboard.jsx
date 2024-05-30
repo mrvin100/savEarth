@@ -5,16 +5,17 @@ import { useQuery } from '@tanstack/react-query'
 import { getUser } from '../services/requests'
 import avatar from '../img/user-avatar.svg'
 import { useState } from 'react'
+import { setUserInfos } from '../stores/userInfosReducer'
 
 export default function Dashboard() {
-  const [userInfos, setUserInfos] = useState(null)
   const dispatch = useDispatch()
   const user = useSelector(({ user }) => user)
   const posts = useSelector(({ userBlogs }) => userBlogs)
+  const userInfos = useSelector(({ userInfos }) => userInfos)
 
   async function fetchUser() {
     const res = await getUser(user.id)
-    setUserInfos(res)
+    dispatch(setUserInfos(res))
     dispatch(setUserBlogs(res.blogs))
     return res
   }
@@ -28,13 +29,13 @@ export default function Dashboard() {
   if (res.isLoading) return <div>loading...</div>
 
   if (res.isError) return <div>server internal error</div>
-  console.log(userInfos, user.username)
+  console.log(userInfos, user)
 
   return (
     <section className='dashboard container'>
       <h1 className='heading'>Your welcome {user.username}</h1>
       <div className='profile'>
-        <img src={avatar} alt='user avatar' />
+        <img src={userInfos.src} alt='user avatar' />
         <h3 className='heading'>{user.email}</h3>
         <span>{userInfos ? userInfos.profession : 'profession'}</span>
       </div>
@@ -54,11 +55,6 @@ export default function Dashboard() {
           </Link>
         </div>
         <div className='box'>
-          <h3 className='heading'>Comments</h3>
-          <span className='subtitle'>12+</span>
-          <Link className='btn'>my comments</Link>
-        </div>
-        <div className='box'>
           <h3 className='heading'>Donations</h3>
           <span className='subtitle'>02</span>
           <Link to='/my-donations' className='btn'>
@@ -71,6 +67,11 @@ export default function Dashboard() {
           <Link to={`/my-collections/${user.id}`} className='btn'>
             my collections
           </Link>
+        </div>
+        <div className='box'>
+          <h3 className='heading'>Comments</h3>
+          <span className='subtitle'>12+</span>
+          <Link className='btn'>my comments</Link>
         </div>
       </div>
     </section>

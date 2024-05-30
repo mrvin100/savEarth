@@ -20,7 +20,7 @@ function blogRefactoring(savedBlog) {
 }
 
 function linkRefactoring(link) {
-  return link.split(" ").join("%20");
+  return `${HOST}${PORT}/${link}`;
 }
 
 const storage = multer.diskStorage({
@@ -87,6 +87,7 @@ userRouter.get("/:id", userExtractor, async (req, res, next) => {
       blogs: response.blogs.map((r) => blogRefactoring(r)),
       profession: response.profession,
       username: response.username,
+      src: linkRefactoring(response.src),
     });
   } catch (error) {
     next(error);
