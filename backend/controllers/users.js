@@ -2,6 +2,8 @@ const User = require("../models/user");
 const userRouter = require("express").Router();
 const bcrypt = require("bcrypt");
 const { userExtractor } = require("../utils/middlewares");
+const multer = require("multer");
+
 const { HOST, PORT } = process.env;
 
 function blogRefactoring(savedBlog) {
@@ -17,25 +19,60 @@ function blogRefactoring(savedBlog) {
   };
 }
 
-userRouter.post("/", async (req, res, next) => {
-  const { password, email } = req.body;
-  if (!password || password.length < 8 || !email) {
+function linkRefactoring(link) {
+  return link.split(" ").join("%20");
+}
+
+const storage = multer.diskStorage({
+  destination: (req, file, fn) => {
+    fn(null, "./images/profiles");
+  },
+  filename: (req, file, fn) => {
+    fn(null, Date.now() + file.originalname);
+  },
+});
+
+const upload = multer({
+  storage: storage,
+  limits: {
+    fileSize: 1024 * 1024 * 5,
+  },
+});
+
+userRouter.post("/", upload.single("userFile"), async (req, res, next) => {
+  const { password, username, email } = req.body;
+  const image = req.file && req.file.path;
+  const { body } = req;
+  console.log(body);
+  if (
+    !password ||
+    password.length < 8 ||
+    !email ||
+    !username ||
+    !body.profession ||
+    !body.number
+  ) {
     return res.status(400).json({
       error:
         "email or password or other value malformed, please verify your inputs!",
     });
   }
+  if (image) {
+    body.src = image;
+  }
+
+  console.log(body);
 
   const hashedPassword = await bcrypt.hash(password, 10);
   const user = new User({
-    ...req.body,
-    email,
+    ...body,
+    username,
     password: hashedPassword,
   });
 
   try {
     const savedUser = await user.save();
-    res.send(savedUser).status(200);
+    res.send({ ...savedUser, src: linkRefactoring(savedUser.src) }).status(200);
   } catch (error) {
     next(error);
   }
@@ -49,37 +86,46 @@ userRouter.get("/:id", userExtractor, async (req, res, next) => {
     res.send({
       blogs: response.blogs.map((r) => blogRefactoring(r)),
       profession: response.profession,
+      username: response.username,
     });
   } catch (error) {
     next(error);
   }
 });
 
-userRouter.put("/:id", userExtractor, async (req, res, next) => {
-  const { id } = req.params;
-  const { body } = req;
+userRouter.put(
+  "/:id",
+  upload.single("userFile"),
+  userExtractor,
+  async (req, res, next) => {
+    const { id } = req.params;
+    const { body } = req;
+    const image = req.file && req.file.path;
 
-  if (!body.email || !body.profession || !body.number)
-    return res.status(402).send({ error: "some inputs are missing" });
+    if (!body.username || !body.profession || !body.number || !body.email)
+      return res.status(402).send({ error: "some inputs are missing" });
 
-  try {
-    // const currentUser = User.findById(id);
-    const newUser = {
-      // ...currentUser.doc,
-      email: body.email,
-      profession: body.profession,
-      number: body.number,
-    };
-    console.log("new user", newUser);
-    const updatedUser = await User.findByIdAndUpdate(id, newUser, {
-      new: true,
-    });
-    delete updatedUser.password;
-    delete updatedUser.blogs;
-    res.send(updatedUser);
-  } catch (error) {
-    next(error);
+    if (image) body.src = image;
+
+    try {
+      const newUser = {
+        ...body,
+        email: body.email,
+        profession: body.profession,
+        number: body.number,
+        username: body.username,
+      };
+      console.log("new user", newUser);
+      const updatedUser = await User.findByIdAndUpdate(id, newUser, {
+        new: true,
+      });
+      delete updatedUser.password;
+      delete updatedUser.blogs;
+      res.send({ ...updatedUser, src: linkRefactoring(updatedUser.src) });
+    } catch (error) {
+      next(error);
+    }
   }
-});
+);
 
 module.exports = userRouter;

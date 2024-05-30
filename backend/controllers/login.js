@@ -4,12 +4,18 @@ const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
 
 loginRouter.post("/", async (req, res, next) => {
-  console.log(req.body);
-  const { email, password } = req.body;
-  console.log(email, password);
+  const { email, password, username } = req.body;
+  console.log(email, password, username);
 
   const user = await User.findOne({ email });
   console.log(user);
+
+  if (user.username !== username) {
+    return res.status(401).send({
+      error: "conflicting user credentials please enter right values",
+    });
+  }
+
   const passwordCorrect =
     user === null ? false : await bcrypt.compare(password, user.password);
 
@@ -19,12 +25,15 @@ loginRouter.post("/", async (req, res, next) => {
 
   const userToken = {
     email,
+    username: user.username,
     id: user.id,
   };
   const token = jwt.sign(userToken, process.env.SECRET);
 
   try {
-    res.status(200).send({ token, email, id: user.id });
+    res
+      .status(200)
+      .send({ token, email, username: user.username, id: user.id });
   } catch (error) {
     next(error);
   }

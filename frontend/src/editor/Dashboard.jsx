@@ -28,14 +28,14 @@ export default function Dashboard() {
   if (res.isLoading) return <div>loading...</div>
 
   if (res.isError) return <div>server internal error</div>
-  console.log(userInfos)
+  console.log(userInfos, user.username)
 
   return (
     <section className='dashboard container'>
-      <h1 className='heading'>Your welcome {user.email}</h1>
+      <h1 className='heading'>Your welcome {user.username}</h1>
       <div className='profile'>
         <img src={avatar} alt='user avatar' />
-        <h3 className='heading'>name</h3>
+        <h3 className='heading'>{user.email}</h3>
         <span>{userInfos ? userInfos.profession : 'profession'}</span>
       </div>
       <div className='box_container'>
