@@ -17,8 +17,12 @@ const userSlice = createSlice({
       if (userInfos) return JSON.parse(userInfos)
       return null
     },
+    updateUser(state, action) {
+      const updatedUser = action.payload
+      return { ...updatedUser, token: state.token }
+    },
   },
 })
 
-export const { setUser, removeUser, getUserIds } = userSlice.actions
+export const { setUser, removeUser, getUserIds, updateUser } = userSlice.actions
 export default userSlice.reducer

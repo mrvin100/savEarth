@@ -23,7 +23,7 @@ const schema = new mongoose.Schema({
   },
   src: {
     type: String,
-    default: "./images/profiles/user-avatar1.svg",
+    default: "./images/profiles/user-avatar1.png",
   },
   profession: String,
   number: Number,

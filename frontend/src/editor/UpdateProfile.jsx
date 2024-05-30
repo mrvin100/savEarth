@@ -6,14 +6,17 @@ import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import { useDispatch, useSelector } from 'react-redux'
 import { setNotification } from '../stores/NotificationReducer'
 import { setUserInfos } from '../stores/userInfosReducer'
-import { setUser } from '../stores/userReducer'
+import { setUser, updateUser } from '../stores/userReducer'
+import FormData from 'form-data'
 
 export default function UpdateProfile() {
+  const user = useSelector(({ user }) => user)
   const [userInfos, setUserInfos] = useState({
     email: '',
     profession: '',
     number: '',
-    password: '',
+    username: '',
+    updateUserImage: '',
   })
   // const [user, setUser] = useState(null)
   const id = useParams().id
@@ -30,7 +33,9 @@ export default function UpdateProfile() {
   async function updateUserInfos(data, id) {
     try {
       const res = await updateUserRequest(data, id)
-      dispatch(setUser(res))
+      // dispatch(setUser(res))
+      console.log(res)
+      dispatch(updateUser(res))
       dispatch(
         setNotification({
           msg: 'modification completed successfully',
@@ -60,7 +65,15 @@ export default function UpdateProfile() {
 
   async function handleSubmit(e) {
     e.preventDefault()
-    updateUserInfos(userInfos, id)
+    const data = new FormData()
+    data.append('username', userInfos.username)
+    data.append('email', userInfos.email)
+    data.append('profession', userInfos.profession)
+    data.append('updateUserImage', userInfos.updateUserImage)
+    data.append('number', userInfos.number)
+    // data.append('password', userInfos.password)
+
+    updateUserInfos(data, user.id)
   }
 
   // const userinfo = useSelector(state => state.userInfos)
@@ -75,6 +88,17 @@ export default function UpdateProfile() {
         className='form-container register'
       >
         <h1 className='heading'>update profile</h1>
+        <div className='input_box'>
+          <input
+            id='username'
+            type='text'
+            placeholder='New username'
+            name='username'
+            maxLength='50'
+            className='box'
+            onChange={handleInputs}
+          />
+        </div>
         <div className='input_box'>
           <input
             id='email'
@@ -109,47 +133,28 @@ export default function UpdateProfile() {
             onChange={handleInputs}
           />
         </div>
-        {/* <div className="input_box">
-          <input
-            id="lastpass"
-            type="password"
-            placeholder="Last Password"
-            name="password"
-            maxLength="20"
-            className="box pass"
-            onChange={handleInputs}
-          />
-          <i className="fas fa-eye-slash eye"></i>
-        </div> */}
         <div className='input_box'>
           <input
             id='pass'
             type='password'
-            placeholder='New Password'
+            placeholder='Enter Password'
             name='password'
             maxLength='20'
             className='box pass'
-            onChange={handleInputs}
+            // onChange={handleInputs}
           />
         </div>
-        {/* <div className="input_box">
-          <input
-            id="cpass"
-            type="password"
-            placeholder="Confirm New Password"
-            name="cpass"
-            maxLength="20"
-            className="box cpass"
-          />
-        </div> */}
         <div className='input_box'>
           <label htmlFor='image' className='label'>
             choose your profile image
             <input
               id='image'
               type='file'
-              name='image'
+              name='updateUserImage'
               className='articleImage box'
+              onChange={({ target }) =>
+                setUserInfos({ ...userInfos, updateUserImage: target.files[0] })
+              }
             />
           </label>
         </div>

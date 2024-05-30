@@ -85,6 +85,7 @@ userRouter.get("/:id", userExtractor, async (req, res, next) => {
 
     res.send({
       blogs: response.blogs.map((r) => blogRefactoring(r)),
+      collections: response.collections,
       profession: response.profession,
       username: response.username,
       src: linkRefactoring(response.src),
@@ -96,15 +97,15 @@ userRouter.get("/:id", userExtractor, async (req, res, next) => {
 
 userRouter.put(
   "/:id",
-  upload.single("userFile"),
+  upload.single("updateUserImage"),
   userExtractor,
   async (req, res, next) => {
     const { id } = req.params;
     const { body } = req;
-    const image = req.file && req.file.path;
-
     if (!body.username || !body.profession || !body.number || !body.email)
       return res.status(402).send({ error: "some inputs are missing" });
+
+    const image = req.file && req.file.path;
 
     if (image) body.src = image;
 
@@ -122,7 +123,14 @@ userRouter.put(
       });
       delete updatedUser.password;
       delete updatedUser.blogs;
-      res.send({ ...updatedUser, src: linkRefactoring(updatedUser.src) });
+      res.send({
+        email: updatedUser.email,
+        username: updatedUser.username,
+        src: linkRefactoring(updatedUser.src),
+        profession: updatedUser.profession,
+        number: updatedUser.number,
+        id: updatedUser.id,
+      });
     } catch (error) {
       next(error);
     }

@@ -69,7 +69,7 @@ export default function Login() {
         <h1 className='heading'>Sign in</h1>
         <div className='input_box'>
           <input
-            id='email'
+            id='login-email'
             type='text'
             placeholder='Enter username'
             name='username'

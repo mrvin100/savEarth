@@ -1,10 +1,10 @@
-import { useSelector, useDispatch } from "react-redux";
-import { removeNotification } from "../stores/NotificationReducer";
+import { useSelector, useDispatch } from 'react-redux'
+import { removeNotification } from '../stores/NotificationReducer'
 
 export default function Notification() {
-  const notification = useSelector((state) => state.notification);
-  if (!notification) return;
-  console.log(notification);
+  const notification = useSelector((state) => state.notification)
+  if (!notification || notification.length === 0) return
+  console.log(notification)
 
   const styles = {
     color: notification.clr,
@@ -14,16 +14,16 @@ export default function Notification() {
     // position: "sticky",
     // top: "0",
     // backgroundColor: "gray",
-  };
+  }
 
-  const dispatch = useDispatch();
+  const dispatch = useDispatch()
   setTimeout(() => {
-    dispatch(removeNotification());
-  }, 3000);
+    dispatch(removeNotification())
+  }, 3000)
 
   return (
-    <div style={styles} className="message">
-      <span>{notification.msg}</span> <i className="bx bx-notification"></i>
+    <div style={styles} className='message'>
+      <span>{notification.msg}</span> <i className='bx bx-notification'></i>
     </div>
-  );
+  )
 }
