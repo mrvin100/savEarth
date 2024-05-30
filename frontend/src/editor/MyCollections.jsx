@@ -22,7 +22,7 @@ export default function MyCollections() {
     const ans = [...res.data.blogs];
 
     collections = ans.reverse();
-    dispatch(setUserBlogs(res.data));
+    dispatch(setUserBlogs(res.data.blogs));
   }
   console.log(collections[0]);
 
