@@ -1,4 +1,3 @@
-// <<<<<<< HEAD
 import { Link } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import { setUserBlogs } from '../stores/userBlogsReducer'
@@ -69,7 +68,7 @@ export default function Dashboard() {
         <div className='box'>
           <h3 className='heading'>collections</h3>
           <span className='subtitle'>10+</span>
-          <Link to='/my-collections' className='btn'>
+          <Link to={`/my-collections/${user.id}`} className='btn'>
             my collections
           </Link>
         </div>

@@ -37,12 +37,12 @@ const Navbar = ({ items, status, toggle }) => {
       ))}
 
       <div className='icons'>
-        <div id='moon-icon' className='bx bx-moon icon' onClick={changeTheme}>
-          mode
-        </div>
-        <div id='close-icon' className='bx bx-x icon' onClick={toggle}>
-          close
-        </div>
+        <div
+          id='moon-icon'
+          className='bx bx-moon icon'
+          onClick={changeTheme}
+        ></div>
+        <div id='close-icon' className='bx bx-x icon' onClick={toggle}></div>
       </div>
     </nav>
   )
@@ -85,33 +85,25 @@ export default function Header() {
             id='user-icon'
             title='dashboard'
             className='bx bx-user icon'
-          >
-            dashboard
-          </Link>
+          ></Link>
           <Link
             to='/donate'
             title='donate now'
             className='bx bx-donate-heart icon'
-          >
-            donate
-          </Link>
+          ></Link>
           <div
             id='menu-icon'
             className='bx bx-grid-alt icon'
             onClick={toggleNavbar}
             style={{ opacity: navbar ? 0 : 1 }}
-          >
-            menu
-          </div>
+          ></div>
         </div>
       </div>
       <Link
         to='/add-post'
         className='bx bx-notepad icon add_post'
         title='add post'
-      >
-        action
-      </Link>
+      ></Link>
     </header>
   )
 }

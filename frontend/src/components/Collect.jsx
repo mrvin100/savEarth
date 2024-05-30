@@ -1,40 +1,40 @@
-import { Link } from "react-router-dom";
+import { Link } from 'react-router-dom'
 
-export default function Collect({ collect }) {
-  const { date, title, description, tags } = collect;
+export default function Collect({ post }) {
+  const { date, title, description, tags } = post
   return (
-    <div className="box">
-      <div className="tools">
+    <div className='box'>
+      <div className='tools'>
         <Link
-          to="/update-collect"
-          className="bx bx-edit icon"
-          title="update collect"
+          to='/update-collect'
+          className='bx bx-edit icon'
+          title='update collect'
         ></Link>
         <div
-          className="bx bx-trash icon"
-          title="delete collect"
+          className='bx bx-trash icon'
+          title='delete collect'
           onClick={() => {
-            return confirm("confirm delete this collect?");
+            return confirm('confirm delete this collect?')
           }}
         ></div>
       </div>
-      <div className="details">
-        <div className="date">{date}</div>
-        <Link to="/view-collect" className="link hide_text">
+      <div className='details'>
+        <div className='date'>{date}</div>
+        <Link to='/view-collect' className='link hide_text'>
           {title}
-          <i className="bx bx-right-down-arrow-circle"></i>
+          <i className='bx bx-right-down-arrow-circle'></i>
         </Link>
-        <p className="hide_text">{description}</p>
-        <div className="tags">
+        <p className='hide_text'>{description}</p>
+        <div className='tags'>
           {tags.map((tag) => {
             return (
-              <span key={tags.indexOf(tag)} className="tag">
+              <span key={tags.indexOf(tag)} className='tag'>
                 {tag}
               </span>
-            );
+            )
           })}
         </div>
       </div>
     </div>
-  );
+  )
 }
