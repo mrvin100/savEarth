@@ -238,6 +238,7 @@ h3.heading {
   border-radius: var(--s2-raduis);
   background: var(--white1);
   border: none;
+  text-align: center;
   color: var(--black1);
   font-size: var(--m2-size);
   padding: 0.5rem 1rem;
@@ -1069,6 +1070,65 @@ h3.heading {
         font-size: var(--m1-size);
       }
     }
+  }
+}
+
+/* collections section starts */
+
+.collections {
+  .tools {
+    display: none;
+  }
+  h1 {
+    text-align: center;
+    margin: 1rem 0;
+  }
+  .box_container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(15rem, 20rem));
+    place-content: center;
+    gap: 1rem;
+    .box {
+      position: relative;
+      padding: 1rem;
+      padding-top: 2rem;
+      border: var(--s2-border-black);
+      box-shadow: var(--shadow4);
+      &:hover {
+        box-shadow: var(--shadow1);
+        transition: all 0.3s linear;
+      }
+      .date {
+        position: absolute;
+        top: 0.5rem;
+        right: 0;
+        padding: 0.5rem;
+        background: var(--black-alt1);
+        font-size: var(--s2-size);
+      }
+      .link {
+        display: inline-block;
+        margin-top: 0.8rem;
+        &::first-letter {
+          text-transform: capitalize;
+        }
+      }
+      h3.heading {
+        margin-bottom: 1rem;
+        text-align: center;
+      }
+      .btn {
+        display: block;
+      }
+    }
+  }
+}
+
+/* my collection section starts */
+
+.collections.my_collections {
+  .tools {
+    display: block;
   }
 }
 

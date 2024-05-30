@@ -88,6 +88,17 @@ export default function Register() {
         </div>
         <div className="input_box">
           <input
+            id="username"
+            type="text"
+            placeholder="Enter username"
+            name="username"
+            maxLength="50"
+            className="box"
+            onChange={handleInputs}
+          />
+        </div>
+        <div className="input_box">
+          <input
             id="number"
             type="number"
             placeholder="Enter number"
