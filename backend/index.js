@@ -28,6 +28,7 @@ mongoose
 
 app.use(express.json());
 app.use(cors());
+app.use(express.static("dist"));
 app.use("/images", express.static("images"));
 app.use(logger);
 
@@ -42,5 +43,6 @@ app.use("/api/collections", collectionRouter);
 
 app.use(unknownEndpoint);
 app.use(errorHandler);
+const port = PORT || 3000;
 
-app.listen(PORT, () => console.log("server running on port", PORT));
+app.listen(port, () => console.log("server running on port", port));
