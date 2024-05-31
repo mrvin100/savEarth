@@ -1,10 +1,13 @@
-import { getUser } from '../services/requests'
+import { deleteCollectionRequest, getUser } from '../services/requests'
 import { Link, useParams } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
 import { useMutation, useQuery } from '@tanstack/react-query'
 import { setUserBlogs } from '../stores/userBlogsReducer'
 import Collect from '../components/Collect'
-import { deleteCollection, setUserCollections } from '../stores/userCollections'
+import {
+  deleteUserCollection,
+  setUserCollections,
+} from '../stores/userCollections'
 import { setNotification } from '../stores/NotificationReducer'
 
 export default function MyCollections() {
@@ -16,7 +19,7 @@ export default function MyCollections() {
   async function fetchUserCollections(id) {
     const { collections } = await getUser(id)
     dispatch(setUserCollections(collections))
-
+    console.log(collections)
     return collections
   }
 
@@ -25,12 +28,15 @@ export default function MyCollections() {
   }
 
   const res = useQuery({
-    queryKey: ['userBlogs'],
+    queryKey: ['userCollection'],
     queryFn: () => fetchUserCollections(id),
   })
 
   const deletePostMutation = useMutation({
-    mutationFn: deleteCollection,
+    mutationFn: deleteCollectionRequest,
+    onSuccess: (res) => {
+      dispatch(deleteUserCollection(res))
+    },
     onError: (error) =>
       setNotification({ msg: error.response.data.error, clr: 'red' }),
   })

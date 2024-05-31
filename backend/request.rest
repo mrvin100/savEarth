@@ -50,3 +50,16 @@ Content-Type: application/json
 ###
 get http://localhost:3000/api/user/6650f0ac38dd861254b87e90
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InN0YWNAZ21haWwuY29tIiwiaWQiOiI2NjUwZjBhYzM4ZGQ4NjEyNTRiODdlOTAiLCJpYXQiOjE3MTY3MTcxNDd9.1_01Xrb58nAH3xYjkTq-ZOBEDLGLdsJBXFkSk_FTGDk
+
+###
+post http://localhost:3000/api/collections
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InN0YWNAZ21haWwuY29tIiwidXNlcm5hbWUiOiJzdGFjIHZpcnVzIiwiaWQiOiI2NjU4Y2VmZTg2Y2Q3OWZlOWE4MzU1YzQiLCJpYXQiOjE3MTcwOTYyMDR9.T7jqo6xOGBJ7Y3eYS9b3abZzUFBqGzCcoN4CC7dqs8c
+
+
+{
+    "title": "rest test",
+    "description": "a test passing through rest",
+    "tags": "code#test#urgency",
+    "country": "cameroun"
+}

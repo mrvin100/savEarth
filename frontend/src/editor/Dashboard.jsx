@@ -6,17 +6,20 @@ import { getUser } from '../services/requests'
 import avatar from '../img/user-avatar.svg'
 import { useState } from 'react'
 import { setUserInfos } from '../stores/userInfosReducer'
+import { setUserCollections } from '../stores/userCollections'
 
 export default function Dashboard() {
   const dispatch = useDispatch()
   const user = useSelector(({ user }) => user)
   const posts = useSelector(({ userBlogs }) => userBlogs)
   const userInfos = useSelector(({ userInfos }) => userInfos)
+  const collections = useSelector(({ userCollections }) => userCollections)
 
   async function fetchUser() {
     const res = await getUser(user.id)
     dispatch(setUserInfos(res))
     dispatch(setUserBlogs(res.blogs))
+    dispatch(setUserCollections(res.collections))
     return res
   }
 
@@ -63,7 +66,7 @@ export default function Dashboard() {
         </div>
         <div className='box'>
           <h3 className='heading'>collections</h3>
-          <span className='subtitle'>10+</span>
+          <span className='subtitle'>{collections.length}</span>
           <Link to={`/my-collections/${user.id}`} className='btn'>
             my collections
           </Link>

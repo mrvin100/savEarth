@@ -5,10 +5,6 @@ const schema = mongoose.Schema({
     type: String,
     default: "Unknown",
   },
-  src: {
-    type: String,
-    required: true,
-  },
   date: String,
   description: {
     type: String,

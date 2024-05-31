@@ -28,33 +28,6 @@ const userCollectionReducer = createSlice({
   },
 })
 
-export function updateCollection(data, id) {
-  return async (dispatch) => {
-    const res = await updateCollectionRequest(data, id)
-    dispatch(updateCollection(res))
-    dispatch(
-      setNotification({ msg: 'update successfully completed', clr: 'green' })
-    )
-  }
-}
-
-export function deleteCollection(id) {
-  return async (dispatch) => {
-    const res = await deleteCollectionRequest(id)
-    dispatch(deleteUserCollection(res))
-    dispatch(
-      setNotification({ msg: 'update successfully completed', clr: 'green' })
-    )
-  }
-}
-
-export function addCollection(data) {
-  return async (dispatch) => {
-    const res = await postCollectionRequest(data)
-    dispatch(appendUserCollection(res))
-  }
-}
-
 export const {
   setUserCollections,
   appendUserCollection,

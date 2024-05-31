@@ -19,7 +19,7 @@ export default function Notification() {
   const dispatch = useDispatch()
   setTimeout(() => {
     dispatch(removeNotification())
-  }, 3000)
+  }, 5000)
 
   return (
     <div style={styles} className='message'>

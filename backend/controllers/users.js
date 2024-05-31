@@ -7,7 +7,7 @@ const multer = require("multer");
 const { HOST, PORT } = process.env;
 
 function blogRefactoring(savedBlog) {
-  const link = savedBlog.src.split(" ").join("%20");
+  // const link = savedBlog.src.split(" ").join("%20");
 
   return {
     id: savedBlog.id,
@@ -15,7 +15,7 @@ function blogRefactoring(savedBlog) {
     date: savedBlog.date,
     description: savedBlog.description,
     tags: savedBlog.tags,
-    src: `${HOST}${PORT}/${link}`,
+    src: `${HOST}${PORT}/${savedBlog.src}`,
   };
 }
 
@@ -81,7 +81,10 @@ userRouter.post("/", upload.single("userFile"), async (req, res, next) => {
 userRouter.get("/:id", userExtractor, async (req, res, next) => {
   const { id } = req.params;
   try {
-    const response = await User.findById(id).populate("blogs");
+    const response = await User.findById(id)
+      .populate("blogs")
+      .populate("collections");
+    console.log(response);
 
     res.send({
       blogs: response.blogs.map((r) => blogRefactoring(r)),

@@ -6,7 +6,7 @@ export default function Collect({ post, Delete }) {
     <div className='box'>
       <div className='tools'>
         <Link
-          to='/update-collect'
+          to={`/update-collect/${id}`}
           className='bx bx-edit icon'
           title='update collect'
         ></Link>
