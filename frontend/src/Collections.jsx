@@ -1,16 +1,36 @@
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import Collect from "./components/Collect";
+import { useQuery } from "@tanstack/react-query";
+import { getData } from "./services/requests";
+import { setCollections } from "./stores/collectionReducer";
 
 export default function Collections() {
-  let posts = useSelector((state) => state.blogs);
+  const dispatch = useDispatch();
+  let posts = useSelector((state) => {
+    console.log(state);
+    return state.collections;
+  });
+
+  const res = useQuery({
+    queryKey: ["collections"],
+    queryFn: () => getData("collections"),
+  });
+  if (res.isLoading) return <div>loading...</div>;
+  dispatch(setCollections(res.data));
   return (
     <section className="collections container">
       <h1 className="heading">all collections</h1>
       <div className="box_container">
-        {posts &&
+        {posts.length ? (
           posts.map((collect) => {
-            return <Collect key={posts.indexOf(collect)} post={collect} />;
-          })}
+            return <Collect key={posts.indexOf(collect)} collect={collect} />;
+          })
+        ) : (
+          <div className="message-box">
+            <span>no collections added yet!</span>
+            <i className="bx bx-info-square icon"></i>
+          </div>
+        )}
       </div>
     </section>
   );

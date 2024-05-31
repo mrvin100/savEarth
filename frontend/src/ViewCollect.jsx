@@ -1,10 +1,10 @@
 import { useDispatch, useSelector } from "react-redux";
 import { useQuery } from "@tanstack/react-query";
-import { getUser } from "./services/requests";
+import { getData, getUser } from "./services/requests";
 import { Link, useParams } from "react-router-dom";
-import { setUserBlogs } from "./stores/userBlogsReducer";
 import Collect from "./components/Collect";
 import { setUserCollections } from "./stores/userCollections";
+import Loader from "./components/Loader";
 
 export default function ViewCollect() {
   const collectionId = useParams().id;
@@ -19,18 +19,18 @@ export default function ViewCollect() {
 
   async function fetchUserCollections(id) {
     console.log(id);
-    const res = await getUser(id);
-    dispatch(setUserCollections(res.collections));
-    return res.collections;
+    const res = await getData("collections");
+    dispatch(setUserCollections(res));
+    return res;
   }
 
   const res = useQuery({
-    queryKey: ["viewBlog"],
+    queryKey: ["userCollections"],
     queryFn: () => fetchUserCollections(userId.id),
     retry: 2,
   });
 
-  if (res.isLoading) return <div>loading...</div>;
+  if (res.isLoading) return <Loader />;
 
   if (res.isError) return <div>server internal error</div>;
 
@@ -41,8 +41,8 @@ export default function ViewCollect() {
       <section className="view-collect container">
         <div className="details">
           <div className="infos">
-            <span className="date">{collect.date}</span>
-            <span className="country">Cameroun</span>
+            <span className="date">{collect.country}</span>
+            <span className="country">{collect.country}</span>
           </div>
           <h3 className="heading">{collect.title}</h3>
           <p className="description">{collect.description}</p>

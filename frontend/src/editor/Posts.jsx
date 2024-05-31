@@ -5,6 +5,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { useQuery, useMutation } from "@tanstack/react-query";
 import { deleteUserBlog, setUserBlogs } from "../stores/userBlogsReducer";
 import { setNotification } from "../stores/NotificationReducer";
+import Loader from "../components/Loader";
 
 export default function Posts() {
   let posts = useSelector((state) => state.userBlogs);
@@ -37,7 +38,7 @@ export default function Posts() {
       setNotification({ msg: error.response.data.error, clr: "red" }),
   });
 
-  if (res.isLoading) return <div>loading...</div>;
+  if (res.isLoading) return <Loader />;
 
   if (res.isError) return <div>server internal error</div>;
 
@@ -58,6 +59,7 @@ export default function Posts() {
         ) : (
           <div className="message-box">
             <span>no blog posted, please add now!</span>
+            <i className="bx bx-info-square icon"></i>
           </div>
         )}
       </div>

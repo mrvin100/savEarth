@@ -7,6 +7,7 @@ import { setNotification } from "../stores/NotificationReducer";
 import { useQuery } from "@tanstack/react-query";
 import { getBlogRequest } from "../services/requests";
 import Post from "../components/Post";
+import Loader from "../components/Loader";
 
 export default function UpdatePost() {
   // const [image, setImage] = useState('')
@@ -33,7 +34,7 @@ export default function UpdatePost() {
       refetchOnWindowFocus: false,
     });
 
-    if (res.isLoading) return <div>loading...</div>;
+    if (res.isLoading) return <Loader />;
 
     if (res.isError) return <div>internale server error</div>;
     ancientPost = res.data;

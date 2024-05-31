@@ -22,7 +22,7 @@ function Home() {
             <Link className="btn" to="/blog">
               our articles
             </Link>
-            <Link className="link" to="/donations">
+            <Link className="link" to="/collections">
               donate now
             </Link>
           </div>
