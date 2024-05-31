@@ -17,7 +17,7 @@ const app = express();
 const userRouter = require("./controllers/users");
 const loginRouter = require("./controllers/login");
 const blogRouter = require("./controllers/blogs");
-const imageRouter = require("./controllers/images");
+const collectionRouter = require("./controllers/collections");
 
 console.log("connecting to", MONGODB_URI);
 mongoose.set("strictQuery", true);
@@ -38,6 +38,7 @@ app.use(tokenExtractor);
 app.use("/api/user", userRouter);
 app.use("/api/login", loginRouter);
 app.use("/api/blogs", blogRouter);
+app.use("/api/collections", collectionRouter);
 
 app.use(unknownEndpoint);
 app.use(errorHandler);

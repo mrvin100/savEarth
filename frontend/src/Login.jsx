@@ -11,6 +11,7 @@ export default function Login() {
   const [userCredentials, setUserCredentials] = useState({
     email: '',
     password: '',
+    username: '',
   })
   const navigate = useNavigate()
   const dispatch = useDispatch()
@@ -66,6 +67,18 @@ export default function Login() {
         onSubmit={handleSubmit}
       >
         <h1 className='heading'>Sign in</h1>
+        <div className='input_box'>
+          <input
+            id='login-email'
+            type='text'
+            placeholder='Enter username'
+            name='username'
+            maxLength='50'
+            className='box'
+            value={userCredentials.username}
+            onChange={handleInputs}
+          />
+        </div>
         <div className='input_box'>
           <input
             id='email'

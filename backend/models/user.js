@@ -1,6 +1,11 @@
 const mongoose = require("mongoose");
+const uniqueValidator = require("mongoose-unique-validator");
 
 const schema = new mongoose.Schema({
+  username: {
+    type: String,
+    required: true,
+  },
   email: {
     type: String,
     require: true,
@@ -16,12 +21,28 @@ const schema = new mongoose.Schema({
     required: true,
     minlength: 8,
   },
+  src: {
+    type: String,
+    default: "./images/profiles/user-avatar1.png",
+  },
   profession: String,
   number: Number,
   blogs: [
     {
       type: mongoose.Schema.Types.ObjectId,
       ref: "Blog",
+    },
+  ],
+  collections: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Collection",
+    },
+  ],
+  donations: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Collection",
     },
   ],
 });
@@ -33,5 +54,7 @@ schema.set("toJSON", {
     delete returnedObject.__v;
   },
 });
+
+schema.plugin(uniqueValidator);
 
 module.exports = mongoose.model("User", schema);

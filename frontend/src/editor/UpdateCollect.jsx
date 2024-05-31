@@ -1,100 +1,103 @@
-import { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { postBlogRequest } from "../services/requests";
-import FormData from "form-data";
-import { useMutation } from "@tanstack/react-query";
-import { useDispatch } from "react-redux";
-import { appendBlog } from "../stores/blogReducer";
-import { setNotification } from "../stores/NotificationReducer";
+import { useState } from 'react'
+import { useNavigate, useParams } from 'react-router-dom'
+import { updateCollectionRequest } from '../services/requests'
+import { useMutation } from '@tanstack/react-query'
+import { useDispatch } from 'react-redux'
+import { setNotification } from '../stores/NotificationReducer'
+import { updateUserCollection } from '../stores/userCollections'
 
 export default function UpdateCollect() {
-  const [blogInfos, setBlogInfos] = useState({
-    title: "",
-    tags: "",
-    description: "",
-    file: "",
-  });
-  const dispatch = useDispatch();
-  const navigate = useNavigate();
+  const [collectionInfos, setCollectionInfos] = useState({
+    title: '',
+    tags: '',
+    description: '',
+    country: '',
+  })
+  const id = useParams().id
+  const dispatch = useDispatch()
+  const navigate = useNavigate()
 
-  const addPostMutation = useMutation({
-    mutationFn: postBlogRequest,
+  const updateCollectionMutation = useMutation({
+    mutationFn: updateCollectionRequest,
     onSuccess: (res) => {
-      console.log(res);
-      dispatch(appendBlog(res));
-      navigate(`/posts/${res.user}`);
+      console.log(res)
+      dispatch(updateUserCollection(res))
+      navigate(`/my-collections/${res.user}`)
     },
     onError: (error) =>
       dispatch(
         setNotification({
           msg: error.response.data.error,
-          clr: "red",
+          clr: 'red',
         })
       ),
-  });
+  })
 
   function handleInputs(e) {
-    const { value, name } = e.target;
-    setBlogInfos({ ...blogInfos, [name]: value });
+    const { value, name } = e.target
+    setCollectionInfos({ ...collectionInfos, [name]: value })
   }
 
   async function handleSubmit(e) {
-    e.preventDefault();
-
-    const blogData = new FormData();
-    blogData.append("title", blogInfos.title);
-    blogData.append("tags", blogInfos.tags);
-    blogData.append("description", blogInfos.description);
-    blogData.append("file", blogInfos.file);
-
-    addPostMutation.mutate(blogData);
+    e.preventDefault()
+    // collectionInfos.id = id
+    updateCollectionMutation.mutate({ ...collectionInfos, id })
   }
 
   return (
-    <section className="login-register-section container">
-      <form className="form-container login" onSubmit={handleSubmit}>
-        <h1 className="heading">Update collect</h1>
-        <div className="input_box">
+    <section className='login-register-section container'>
+      <form className='form-container login' onSubmit={handleSubmit}>
+        <h1 className='heading'>Update collect</h1>
+        <div className='input_box'>
           <input
-            id="email"
-            type="text"
-            placeholder="Enter title"
-            name="title"
-            className="box"
+            id='colTitle'
+            type='text'
+            placeholder='Enter title'
+            name='title'
+            className='box'
             onChange={handleInputs}
           />
         </div>
-        <div className="input_box">
+        <div className='input_box'>
           <input
-            id="profession"
-            type="text"
-            placeholder="Enter tags t#t#..."
-            name="tags"
-            className="box"
+            id='colprofession'
+            type='text'
+            placeholder='Enter tags t#t#...'
+            name='tags'
+            className='box'
             onChange={handleInputs}
           />
         </div>
 
-        <div className="input_box">
+        <div className='input_box'>
           <textarea
-            name="description"
-            id="description"
-            className="box"
-            placeholder="Enter description"
-            min="000000000"
-            max="999999999"
-            rows="3"
-            cols="10"
+            name='description'
+            id='coldescription'
+            className='box'
+            placeholder='Enter description'
+            min='000000000'
+            max='999999999'
+            rows='3'
+            cols='10'
             onChange={handleInputs}
           ></textarea>
         </div>
+        <div className='input_box'>
+          <input
+            name='country'
+            id='colcountry'
+            className='box'
+            placeholder='Enter country'
+            onChange={handleInputs}
+          />
+        </div>
         <input
-          type="submit"
-          value="update collect"
-          name="update-collect"
-          className="btn"
+          type='submit'
+          value='update collect'
+          name='update-collect'
+          className='btn'
         />
       </form>
     </section>
-  );
+  )
 }
