@@ -402,6 +402,7 @@ h3.heading {
     left: 0;
     right: 0;
     box-shadow: var(--shadow0);
+    z-index: var(--l1-z-index);
   }
 
   background-color: var(--white1);

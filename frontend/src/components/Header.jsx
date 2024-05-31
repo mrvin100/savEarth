@@ -1,13 +1,6 @@
 import { useState } from "react";
+import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-
-const items = [
-  { key: "blog", label: "blog", isdropdown: true },
-  { key: "collections", label: "collections", isdropdown: true },
-  { key: "login", label: "login" },
-  { key: "register", label: "register" },
-  { key: "dashboard", label: "dashboard" },
-];
 
 // Navbar component starts
 
@@ -21,14 +14,14 @@ const Navbar = ({ items, status, toggle }) => {
 
   return (
     <nav className={`navbar ${status ? "show" : ""}`}>
-      <Link key="home" to="/" className="nav_link">
+      <Link key="home" to="/" onClick={toggle} className="nav_link">
         home
       </Link>
       {items.map((item) => (
         <Link
           key={item.label}
           to={`/${item.label}`}
-          // onClick={toggle}
+          onClick={toggle}
           className="nav_link"
         >
           {item.label}
@@ -67,8 +60,26 @@ export default function Header() {
     setNavbar((navbar) => {
       navbar = false;
     });
-    document.querySelector(".header").classList.toggle("active", scrollY > 0);
+    // document.querySelector(".header").classList.toggle("active", scrollY > 0);
   };
+
+  const userCredentials = useSelector(({ user }) => {
+    return user;
+  });
+
+  console.log(userCredentials.token);
+  const initItems = [
+    { key: "blog", label: "blog", isdropdown: true },
+    { key: "collections", label: "collections", isdropdown: true },
+    { key: "login", label: "login" },
+    { key: "register", label: "register" },
+    { key: "dashboard", label: "dashboard" },
+  ];
+
+  const items =
+    userCredentials && userCredentials.token
+      ? [...initItems]
+      : [...initItems].slice(0, initItems.length - 1);
 
   return (
     <header className="header">
@@ -104,12 +115,14 @@ export default function Header() {
             onClick={toggleSearch}
             className="bx bx-search icon"
           ></div>
-          <Link
-            to="/dashboard"
-            id="user-icon"
-            title="dashboard"
-            className="bx bx-user icon"
-          ></Link>
+          {userCredentials && userCredentials.token && (
+            <Link
+              to="/dashboard"
+              id="user-icon"
+              title="dashboard"
+              className="bx bx-user icon"
+            ></Link>
+          )}
           <Link
             to="/collections"
             title="donate now"
@@ -123,11 +136,19 @@ export default function Header() {
           ></div>
         </div>
       </div>
-      <Link
-        to="/add-post"
-        className="bx bx-notepad icon add_post"
-        title="add post"
-      ></Link>
+      {userCredentials && userCredentials.token ? (
+        <Link
+          to="/add-post"
+          className="bx bx-notepad icon add_post"
+          title="add post"
+        ></Link>
+      ) : (
+        <Link
+          to="/login"
+          className="bx bx-log-in icon add_post"
+          title="log in"
+        ></Link>
+      )}
     </header>
   );
 }
