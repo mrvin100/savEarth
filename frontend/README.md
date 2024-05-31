@@ -1,1 +1,0 @@
-# SavEarth Project
