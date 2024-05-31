@@ -465,6 +465,7 @@ h3.heading {
     }
     .main-header {
       position: relative;
+      z-index: -1;
       .navbar.show {
         max-width: 100%;
       }
@@ -539,6 +540,9 @@ h3.heading {
         object-fit: cover;
         border-radius: var(--s2-raduis);
       }
+    }
+    p {
+      white-space: wrap;
     }
     .details {
       padding: 1rem 0;
@@ -636,7 +640,6 @@ h3.heading {
   .input_box {
     margin: 1.5rem 0;
     position: relative;
-
     .box {
       width: 100%;
       padding: 1rem;
@@ -906,6 +909,7 @@ h3.heading {
 .posts {
   .box {
     position: relative;
+    /* z-index: -1; */
     .tools {
       position: absolute;
       top: 0.5rem;
@@ -936,6 +940,7 @@ h3.heading {
   border-bottom: var(--s2-border-black);
   .intro {
     position: relative;
+    /* z-index: -1; */
     margin-bottom: 6rem;
     .post_img {
       width: 100%;
@@ -1061,6 +1066,7 @@ h3.heading {
         border-radius: var(--s1-raduis);
         width: 100%;
         position: relative;
+        /* z-index: -1; */
         margin-bottom: 0.5rem;
         &::after {
           position: absolute;
@@ -1102,7 +1108,8 @@ h3.heading {
       max-height: 7rem;
       width: 100%;
       height: 100%;
-      object-fit: contain;
+      object-fit: cover;
+      border-radius: var(--s2-raduis);
     }
     h3 {
       font-size: var(--m2-size);
@@ -1161,6 +1168,7 @@ h3.heading {
     gap: 1rem;
     .box {
       position: relative;
+      /* z-index: -1; */
       padding: 1rem;
       padding-top: 2rem;
       border: var(--s2-border-black);

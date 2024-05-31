@@ -66,15 +66,7 @@ export default function UpdateCollect() {
             onChange={handleInputs}
           />
         </div>
-        <div className="input_box">
-          <input
-            type="text"
-            placeholder="Enter country"
-            name="country"
-            className="box"
-            onChange={handleInputs}
-          />
-        </div>
+
         <div className="input_box">
           <textarea
             name="description"

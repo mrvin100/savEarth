@@ -56,7 +56,7 @@ export default function AddCollect() {
 
   async function handleSubmit(e) {
     e.preventDefault();
-
+    console.log(collectionInfos);
     addCollectionMutation.mutate(collectionInfos);
   }
 
@@ -78,14 +78,6 @@ export default function AddCollect() {
             type="text"
             placeholder="Enter tags t#t#..."
             name="tags"
-            className="box"
-          />
-        </div>
-        <div className="input_box">
-          <input
-            type="text"
-            placeholder="Enter country"
-            name="country"
             className="box"
             onChange={handleInputs}
           />
@@ -111,7 +103,6 @@ export default function AddCollect() {
             onChange={handleInputs}
           />
         </div>
-        <input type="submit" value="create" name="add-post" className="btn" />
         <input
           type="submit"
           value="create"

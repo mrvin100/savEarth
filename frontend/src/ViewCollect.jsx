@@ -4,26 +4,29 @@ import { getUser } from "./services/requests";
 import { Link, useParams } from "react-router-dom";
 import { setUserBlogs } from "./stores/userBlogsReducer";
 import Collect from "./components/Collect";
+import { setUserCollections } from "./stores/userCollections";
 
 export default function ViewCollect() {
-  const blogId = useParams().id;
+  const collectionId = useParams().id;
   const dispatch = useDispatch();
+
   const userId = useSelector(({ user }) => user);
-  let posts = useSelector(({ userBlogs }) => userBlogs);
-  const blog = useSelector(({ blogs }) => {
-    return blogs.find((b) => b.id === blogId);
+  let userCollects = useSelector(({ userCollections }) => userCollections);
+
+  const collect = useSelector(({ userCollections }) => {
+    return userCollections.find((b) => b.id === collectionId);
   });
 
-  async function fetchUserBlogs(id) {
+  async function fetchUserCollections(id) {
     console.log(id);
     const res = await getUser(id);
-    dispatch(setUserBlogs(res.blogs));
-    return res.blogs;
+    dispatch(setUserCollections(res.collections));
+    return res.collections;
   }
 
   const res = useQuery({
     queryKey: ["viewBlog"],
-    queryFn: () => fetchUserBlogs(userId.id),
+    queryFn: () => fetchUserCollections(userId.id),
     retry: 2,
   });
 
@@ -31,18 +34,18 @@ export default function ViewCollect() {
 
   if (res.isError) return <div>server internal error</div>;
 
-  console.log(blog, posts);
+  // console.log(blog, posts);
 
   return (
     <>
       <section className="view-collect container">
         <div className="details">
           <div className="infos">
-            <span className="date">{blog.date}</span>
+            <span className="date">{collect.date}</span>
             <span className="country">Cameroun</span>
           </div>
-          <h3 className="heading">{blog.title}</h3>
-          <p className="description">{blog.description}</p>
+          <h3 className="heading">{collect.title}</h3>
+          <p className="description">{collect.description}</p>
           <div className="consulting">
             <span>
               +4K.<i className="like bx bx-like icon"></i>
@@ -67,8 +70,10 @@ export default function ViewCollect() {
           more collections for you
         </h2>
         <div className="box_container">
-          {[...posts].slice(posts.length - 3).map((post) => {
-            return <Collect key={posts.indexOf(post)} post={post} />;
+          {[...userCollects].slice(userCollects.length - 3).map((collect) => {
+            return (
+              <Collect key={userCollects.indexOf(collect)} collect={collect} />
+            );
           })}
         </div>
       </section>
