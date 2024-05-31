@@ -54,6 +54,22 @@ export default function Header() {
   const toggleNavbar = () => {
     setNavbar(!navbar);
   };
+
+  const [search, setSearch] = useState(false);
+  const toggleSearch = () => {
+    setSearch(!search);
+  };
+
+  window.onscroll = () => {
+    setSearch((search) => {
+      search = false;
+    });
+    setNavbar((navbar) => {
+      navbar = false;
+    });
+    document.querySelector(".header").classList.toggle("active", scrollY > 0);
+  };
+
   return (
     <header className="header">
       <div className="offers">
@@ -69,7 +85,11 @@ export default function Header() {
         </Link>
         {/* navbar component starts */}
         <Navbar items={items} status={navbar} toggle={toggleNavbar} />
-        <form action="" method="post" className="search_form">
+        <form
+          action=""
+          method="post"
+          className={`search_form ${search ? "show" : ""}`}
+        >
           <input
             type="text"
             placeholder="what do you think.. ?"
@@ -79,7 +99,11 @@ export default function Header() {
           <button type="submit" className="icon bx bx-search"></button>
         </form>
         <div className="icons">
-          <div id="search-icon" className="bx bx-search icon"></div>
+          <div
+            id="search-icon"
+            onClick={toggleSearch}
+            className="bx bx-search icon"
+          ></div>
           <Link
             to="/dashboard"
             id="user-icon"

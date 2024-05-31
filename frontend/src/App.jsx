@@ -15,6 +15,7 @@ import Collections from './Collections'
 import MyCollections from './editor/MyCollections'
 import Notification from './components/Notification'
 
+<<<<<<< HEAD
 import { useEffect } from 'react'
 import { setToken } from './services/requests'
 import { initialBlogs } from './stores/blogReducer'
@@ -23,6 +24,18 @@ import { setUser } from './stores/userReducer'
 import { Route, Routes, BrowserRouter } from 'react-router-dom'
 import AddCollect from './editor/AddCollect'
 import UpdateCollect from './editor/UpdateCollect'
+=======
+import { useEffect } from "react";
+import { setToken } from "./services/requests";
+import { initialBlogs } from "./stores/blogReducer";
+import { useDispatch } from "react-redux";
+import { setUser } from "./stores/userReducer";
+import { Route, Routes, BrowserRouter } from "react-router-dom";
+import AddCollect from "./editor/AddCollect";
+import UpdateCollect from "./editor/UpdateCollect";
+import ViewCollect from "./ViewCollect";
+import Donate from "./editor/Donate";
+>>>>>>> 015c290 (add update on project #5)
 
 export default function App() {
   const dispatch = useDispatch()
@@ -41,6 +54,7 @@ export default function App() {
       <Notification />
       <Header />
       <Routes>
+<<<<<<< HEAD
         <Route path='/' element={<Home />}></Route>
         <Route path='/blog' element={<Blog />}></Route>
         <Route path='/collections' element={<Collections />}></Route>
@@ -55,6 +69,24 @@ export default function App() {
         <Route path='/add-collect' element={<AddCollect />}></Route>
         <Route path='/view-post/:id' element={<ViewPost />}></Route>
         <Route path='/update-profile/:id' element={<UpdateProfile />}></Route>
+=======
+        <Route path="/" element={<Home />}></Route>
+        <Route path="/blog" element={<Blog />}></Route>
+        <Route path="/collections" element={<Collections />}></Route>
+        <Route path="/donate" element={<Donate />}></Route>
+        <Route path="/login" element={<Login />}></Route>
+        <Route path="/register" element={<Register />}></Route>
+        <Route path="/add-post" element={<AddPost />}></Route>
+        <Route path="/update-collect" element={<UpdateCollect />}></Route>
+        <Route path="/update-post/:id" element={<UpdatePost />}></Route>
+        <Route path="/dashboard" element={<Dashboard />}></Route>
+        <Route path="/posts/:id" element={<Posts />}></Route>
+        <Route path="/my-collections/:id" element={<MyCollections />}></Route>
+        <Route path="/add-collect" element={<AddCollect />}></Route>
+        <Route path="/view-post/:id" element={<ViewPost />}></Route>
+        <Route path="/view-collect/:id" element={<ViewCollect />}></Route>
+        <Route path="/update-profile/:id" element={<UpdateProfile />}></Route>
+>>>>>>> 015c290 (add update on project #5)
       </Routes>
     </BrowserRouter>
   )

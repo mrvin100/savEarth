@@ -331,6 +331,7 @@ h3.heading {
 /* header section starts */
 
 .header {
+  margin-bottom: 3rem;
   &.active {
     position: sticky;
     top: 0;
@@ -486,7 +487,7 @@ h3.heading {
           border-radius: var(--s2-raduis);
         }
       }
-      .search_form.active {
+      .search_form.show {
         display: flex;
       }
     }
@@ -501,6 +502,7 @@ h3.heading {
     border: var(--s1-border-black);
     font-size: var(--l1-size);
     box-shadow: var(--shadow0);
+    z-index: var(--l1-z-index);
   }
 }
 
@@ -1198,6 +1200,106 @@ h3.heading {
 .collections.my_collections {
   .tools {
     display: block;
+  }
+}
+
+/* view collect section start */
+
+.view-collect {
+  .details {
+    max-width: 30rem;
+    width: 100%;
+    margin: 0 auto;
+    border: var(--s2-border-black);
+    padding: 1rem;
+    .infos {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 1rem;
+    }
+    h3 {
+      color: var(--main-clr);
+      margin: 0.5rem 0;
+    }
+    p {
+      background: var(--white2);
+      padding: 0.8rem;
+      border-radius: var(--s2-raduis);
+    }
+    .consulting {
+      margin: 1rem 0;
+      span {
+        color: var(--black4);
+        margin-right: 0.5rem;
+        .bx {
+          display: inline-block;
+          vertical-align: middle;
+          color: var(--main-clr);
+          padding: 0.2rem 0.4rem;
+        }
+      }
+    }
+    .btn {
+      display: block;
+    }
+  }
+}
+
+/* donate section starts */
+.donate {
+  margin-top: 3rem;
+  box-shadow: var(--shadow0);
+  max-width: 30rem;
+  width: 100%;
+  .category {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 0.5rem;
+    .box {
+      border: var(--s2-border-black);
+      padding: 0.2rem 0.4rem;
+      cursor: pointer;
+      &:hover,
+      &:first-of-type {
+        border: var(--s1-border-black);
+        transition: border var(--s1-transition);
+      }
+      .bx {
+        font-size: var(--l2-size);
+        vertical-align: middle;
+        margin-right: 0.5rem;
+      }
+    }
+  }
+  .donate-form {
+    border-top: var(--s2-border-black);
+    margin-top: 1rem;
+    .input_box {
+      label {
+        display: inline-block;
+        margin: 0.5rem 0;
+      }
+      .box {
+        width: 100%;
+        border: var(--s2-border-black);
+        padding: 1rem;
+        &:focus {
+          border: var(--s1-border-black);
+        }
+        &::placeholder {
+          font-family: var(--body-font);
+          font-size: var(--m1-size);
+          color: var(--black4);
+          letter-spacing: 0.02rem;
+        }
+      }
+    }
+    .btn {
+      margin-top: 1rem;
+      width: 100%;
+    }
   }
 }
 
