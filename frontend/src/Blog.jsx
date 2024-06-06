@@ -3,6 +3,7 @@ import { useSelector } from "react-redux";
 
 function Blog() {
   let posts = useSelector((state) => state.blogs);
+  console.log(posts);
 
   return (
     <section className="blog container">
