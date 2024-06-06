@@ -48,6 +48,11 @@ export default function Register() {
     registerMutation.mutate(userData);
   }
 
+  const [showPass, setShowPass] = useState(false);
+  const handleShowPass = () => {
+    setShowPass(!showPass);
+  };
+
   return (
     <section className="login-register-section container">
       <div className="content">
@@ -119,19 +124,22 @@ export default function Register() {
         <div className="input_box">
           <input
             id="pass"
-            type="password"
+            type={showPass ? "text" : "password"}
             placeholder="Password"
             name="password"
             maxLength="20"
             className="box pass"
             onChange={handleInputs}
           />
-          <i className="fas fa-eye-slash eye"></i>
+          <i
+            className={`fas fa-eye${showPass ? "" : "-slash"} eye`}
+            onClick={handleShowPass}
+          ></i>
         </div>
         <div className="input_box">
           <input
             id="cpass"
-            type="password"
+            type={showPass ? "text" : "password"}
             placeholder="Confirm Password"
             name="cpass"
             maxLength="20"
