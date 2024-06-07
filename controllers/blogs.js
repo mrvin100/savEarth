@@ -15,7 +15,7 @@ function blogRefactoring(savedBlog) {
     date: savedBlog.date,
     description: savedBlog.description,
     tags: savedBlog.tags,
-    src: `${HOST}${PORT}/${link}`,
+    src: `${HOST}/${link}`,
     user: savedBlog.user,
   };
 }
