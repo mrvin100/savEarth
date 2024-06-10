@@ -3,6 +3,7 @@ import Collect from "./components/Collect";
 import { useQuery } from "@tanstack/react-query";
 import { getData } from "./services/requests";
 import { setCollections } from "./stores/collectionReducer";
+import Loader from "./components/Loader";
 
 export default function Collections() {
   const dispatch = useDispatch();
@@ -15,7 +16,7 @@ export default function Collections() {
     queryKey: ["collections"],
     queryFn: () => getData("collections"),
   });
-  if (res.isLoading) return <div>loading...</div>;
+  if (res.isLoading) return <Loader />;
   dispatch(setCollections(res.data));
   return (
     <section className="collections container">

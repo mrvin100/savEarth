@@ -20,7 +20,7 @@ function blogRefactoring(savedBlog) {
 }
 
 function linkRefactoring(link) {
-  return `${HOST}${PORT}/${link}`;
+  return `${HOST}/${link}`;
 }
 
 const storage = multer.diskStorage({
